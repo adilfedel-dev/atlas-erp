@@ -1,0 +1,64 @@
+<Window x:Class="AtlasERP.Presentation.WPF.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AtlasERP — Sign in"
+        Width="420" Height="480"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{DynamicResource Brush.Background.Window}">
+    <Grid>
+        <Border Width="340"
+                Padding="32"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{DynamicResource Brush.Background.Surface}"
+                BorderBrush="{DynamicResource Brush.Border}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="AtlasERP"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource Brush.Text.Primary}"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="Sign in to continue"
+                           FontSize="13"
+                           Margin="0,4,0,24"
+                           Foreground="{DynamicResource Brush.Text.Secondary}"
+                           HorizontalAlignment="Center" />
+
+                <TextBlock Text="Username" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="8"
+                         Margin="0,0,0,16" />
+
+                <TextBlock Text="Password" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
+                <PasswordBox x:Name="PasswordInput"
+                             Padding="8"
+                             Margin="0,0,0,8"
+                             PasswordChanged="PasswordInput_PasswordChanged" />
+
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="{DynamicResource Brush.Error}"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,8"
+                           Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+
+                <Button Content="Sign in"
+                        Command="{Binding LoginCommand}"
+                        IsDefault="True"
+                        Padding="8"
+                        Height="38"
+                        Background="{DynamicResource Brush.Accent}"
+                        Foreground="White"
+                        BorderThickness="0" />
+
+                <TextBlock Text="Signing in..."
+                           Margin="0,10,0,0"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource Brush.Text.Secondary}"
+                           Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibleConverter}}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
