@@ -20,7 +20,14 @@ public static class PrintHelper
             return false;
         }
 
-        var pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+        // Deliberately NOT using printDialog.PrintableAreaWidth/Height here — different
+        // printer drivers (physical printers, "Microsoft Print to PDF", etc.) report wildly
+        // different values for it, which is why documents kept rendering pushed into the
+        // left third of the page with the rest blank: the fixed-pixel table columns were
+        // sized for a standard page but placed on a page WPF thought was much wider.
+        // Hardcoding standard US Letter at 96 DPI (WPF's native unit) makes layout fully
+        // predictable regardless of the selected printer.
+        var pageSize = new Size(816, 1056);
 
         document.PageHeight = pageSize.Height;
         document.PageWidth = pageSize.Width;

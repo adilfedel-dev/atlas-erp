@@ -73,7 +73,15 @@ public partial class App : Application
             var dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             Directory.CreateDirectory(dataDirectory);
             var masterDbPath = Path.Combine(dataDirectory, "AtlasERP_Master.db");
-            options.UseSqlite($"Data Source={masterDbPath}");
+            // DefaultTimeout gives concurrent short-lived connections room to wait for a
+            // lock to clear instead of failing immediately — see CompanyDbContextFactory
+            // for the full reasoning.
+            var connectionString = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+            {
+                DataSource = masterDbPath,
+                DefaultTimeout = 15
+            }.ConnectionString;
+            options.UseSqlite(connectionString);
         });
 
         services.AddSingleton<ICompanyContextService, CompanyContextService>();

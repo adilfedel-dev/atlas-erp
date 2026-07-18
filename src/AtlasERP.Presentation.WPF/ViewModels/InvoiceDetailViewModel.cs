@@ -35,7 +35,13 @@ public partial class InvoiceDetailViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<Receipt> _receipts = new();
 
     [ObservableProperty] private string? _errorMessage;
-    [ObservableProperty] private bool _isBusy;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(AddLineItemCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveLineItemCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RecordReceiptCommand))]
+    [NotifyCanExecuteChangedFor(nameof(UpdateStatusCommand))]
+    private bool _isBusy;
 
     [ObservableProperty] private string _newLineItemDescription = string.Empty;
     [ObservableProperty] private decimal _newLineItemQuantity = 1;
@@ -94,7 +100,7 @@ public partial class InvoiceDetailViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanWrite))]
     private async Task AddLineItemAsync()
     {
         if (string.IsNullOrWhiteSpace(NewLineItemDescription) || NewLineItemQuantity <= 0 || NewLineItemUnitPrice < 0)
@@ -103,6 +109,7 @@ public partial class InvoiceDetailViewModel : ObservableObject
             return;
         }
 
+        IsBusy = true;
         try
         {
             await _invoiceService.AddLineItemAsync(_invoiceId, NewLineItemDescription, NewLineItemQuantity, NewLineItemUnitPrice);
@@ -115,6 +122,10 @@ public partial class InvoiceDetailViewModel : ObservableObject
         {
             ErrorMessage = $"Could not add line item: {ex.Message}";
         }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanRemoveLineItem))]
@@ -125,6 +136,7 @@ public partial class InvoiceDetailViewModel : ObservableObject
             return;
         }
 
+        IsBusy = true;
         try
         {
             await _invoiceService.RemoveLineItemAsync(SelectedLineItem.Id);
@@ -134,11 +146,17 @@ public partial class InvoiceDetailViewModel : ObservableObject
         {
             ErrorMessage = $"Could not remove line item: {ex.Message}";
         }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
-    private bool CanRemoveLineItem() => SelectedLineItem is not null;
+    private bool CanRemoveLineItem() => !IsBusy && SelectedLineItem is not null;
 
-    [RelayCommand]
+    private bool CanWrite() => !IsBusy;
+
+    [RelayCommand(CanExecute = nameof(CanWrite))]
     private async Task RecordReceiptAsync()
     {
         if (NewReceiptAmount <= 0)
@@ -147,6 +165,7 @@ public partial class InvoiceDetailViewModel : ObservableObject
             return;
         }
 
+        IsBusy = true;
         try
         {
             await _invoiceService.RecordReceiptAsync(_invoiceId, NewReceiptAmount, NewReceiptDate, NewReceiptMethod, null);
@@ -157,11 +176,16 @@ public partial class InvoiceDetailViewModel : ObservableObject
         {
             ErrorMessage = $"Could not record payment: {ex.Message}";
         }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanWrite))]
     private async Task UpdateStatusAsync()
     {
+        IsBusy = true;
         try
         {
             await _invoiceService.UpdateStatusAsync(_invoiceId, Status);
@@ -170,6 +194,10 @@ public partial class InvoiceDetailViewModel : ObservableObject
         catch (Exception ex)
         {
             ErrorMessage = $"Could not update status: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
