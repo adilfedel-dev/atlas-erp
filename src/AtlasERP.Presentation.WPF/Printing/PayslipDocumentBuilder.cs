@@ -41,19 +41,16 @@ public static class PayslipDocumentBuilder
         var employee = payslip.Employee
             ?? throw new InvalidOperationException("Payslip must have its Employee loaded before printing.");
 
+        var accent = DocumentBrandingHelper.GetAccentBrush(company);
         var section = new Section { BreakPageBefore = breakPageBefore };
 
-        section.Blocks.Add(new Paragraph(new Run("PAYSLIP"))
+        section.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
+
+        section.Blocks.Add(new Paragraph(new Run($"PAYSLIP — {periodLabel}"))
         {
-            FontSize = 20,
+            FontSize = 18,
             FontWeight = FontWeights.Bold,
-            TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(0, 0, 0, 2)
-        });
-        section.Blocks.Add(new Paragraph(new Run($"{company.LegalName} — {periodLabel}"))
-        {
-            Foreground = Brushes.Gray,
-            TextAlignment = TextAlignment.Center,
+            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 24)
         });
 
@@ -106,16 +103,16 @@ public static class PayslipDocumentBuilder
         summaryRowGroup.Rows.Add(BuildLabelValueRow("Total deductions", $"-{payslip.TotalDeductions:C}"));
 
         var netRow = new TableRow();
-        netRow.Cells.Add(new TableCell(new Paragraph(new Run("NET PAY")) { FontSize = 15, FontWeight = FontWeights.Bold })
+        netRow.Cells.Add(new TableCell(new Paragraph(new Run("NET PAY")) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent })
         {
             Padding = new Thickness(0, 10, 0, 0),
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 1, 0, 0)
         });
-        netRow.Cells.Add(new TableCell(new Paragraph(new Run(payslip.NetPay.ToString("C"))) { FontSize = 15, FontWeight = FontWeights.Bold, TextAlignment = TextAlignment.Right })
+        netRow.Cells.Add(new TableCell(new Paragraph(new Run(payslip.NetPay.ToString("C"))) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent, TextAlignment = TextAlignment.Right })
         {
             Padding = new Thickness(0, 10, 0, 0),
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 1, 0, 0)
         });
         summaryRowGroup.Rows.Add(netRow);

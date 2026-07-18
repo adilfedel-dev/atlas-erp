@@ -17,6 +17,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(c => c.Name).IsRequired().HasMaxLength(200);
         builder.Property(c => c.LegalName).IsRequired().HasMaxLength(200);
         builder.Property(c => c.LogoPath).HasMaxLength(500);
+        builder.Property(c => c.BrandColorHex).HasMaxLength(20);
         builder.Property(c => c.ConnectionString).IsRequired().HasMaxLength(1000);
         builder.Property(c => c.InvoiceTemplateRef).HasMaxLength(200);
         builder.Property(c => c.PayslipTemplateRef).HasMaxLength(200);

@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type vm:InvoiceListViewModel}">
             <views:InvoiceListView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsView />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -58,6 +61,10 @@
 
                 <!-- Bottom actions -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="6,0">
+                    <ToggleButton Style="{StaticResource Button.NavItem}"
+                                  Command="{Binding NavigateToSettingsCommand}"
+                                  IsChecked="{Binding IsSettingsActive, Mode=OneWay}"
+                                  Content="⚙  Settings" />
                     <ToggleButton Style="{StaticResource Button.NavItem}" Command="{Binding ToggleThemeCommand}" Content="🌓  Toggle theme" />
                     <ToggleButton Style="{StaticResource Button.NavItem}" Command="{Binding LogoutCommand}" Content="↩  Sign out" />
                 </StackPanel>

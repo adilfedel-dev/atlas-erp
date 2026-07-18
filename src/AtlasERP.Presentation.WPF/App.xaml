@@ -13,6 +13,8 @@
 
             <conv:NullToCollapsedConverter x:Key="NullToCollapsedConverter" />
             <conv:BoolToVisibleConverter x:Key="BoolToVisibleConverter" />
+            <conv:PathToImageSourceConverter x:Key="PathToImageSourceConverter" />
+            <conv:HexToBrushConverter x:Key="HexToBrushConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

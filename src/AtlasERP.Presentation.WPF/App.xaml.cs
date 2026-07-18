@@ -93,6 +93,7 @@ public partial class App : Application
         services.AddSingleton<IPayrollService, PayrollService>();
         services.AddSingleton<ICustomerService, CustomerService>();
         services.AddSingleton<IInvoiceService, InvoiceService>();
+        services.AddSingleton<ICompanySettingsService, CompanySettingsService>();
 
         services.AddTransient<LoginViewModel>();
         services.AddTransient<LoginView>();
@@ -119,6 +120,7 @@ public partial class App : Application
         services.AddTransient<InvoiceCreateView>();
         services.AddTransient<InvoiceDetailViewModel>();
         services.AddTransient<InvoiceDetailView>();
+        services.AddTransient<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
     }

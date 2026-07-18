@@ -13,25 +13,21 @@ public static class ContractDocumentBuilder
         var employee = contract.Employee
             ?? throw new InvalidOperationException("Contract must have its Employee loaded before printing.");
 
+        var accent = DocumentBrandingHelper.GetAccentBrush(company);
+
         var document = new FlowDocument
         {
             FontFamily = new FontFamily("Segoe UI"),
             FontSize = 13
         };
 
+        document.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
+
         document.Blocks.Add(new Paragraph(new Run("EMPLOYMENT CONTRACT"))
         {
             FontSize = 20,
             FontWeight = FontWeights.Bold,
-            TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(0, 0, 0, 2)
-        });
-
-        document.Blocks.Add(new Paragraph(new Run(company.LegalName))
-        {
-            FontSize = 13,
-            Foreground = Brushes.Gray,
-            TextAlignment = TextAlignment.Center,
+            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 28)
         });
 
@@ -85,14 +81,14 @@ public static class ContractDocumentBuilder
         var signatureRow = new TableRow();
         signatureRow.Cells.Add(new TableCell(new Paragraph(new Run("Employer signature")))
         {
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 0, 0, 1),
             Padding = new Thickness(0, 0, 0, 40)
         });
         signatureRow.Cells.Add(new TableCell(new Paragraph()));
         signatureRow.Cells.Add(new TableCell(new Paragraph(new Run("Employee signature")))
         {
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 0, 0, 1),
             Padding = new Thickness(0, 0, 0, 40)
         });

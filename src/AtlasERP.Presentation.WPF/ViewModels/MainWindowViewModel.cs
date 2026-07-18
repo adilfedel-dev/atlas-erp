@@ -40,6 +40,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isInvoicesActive;
 
+    [ObservableProperty]
+    private bool _isSettingsActive;
+
     public MainWindowViewModel(ICompanyContextService companyContextService, IServiceProvider serviceProvider, IAppNavigation appNavigation)
     {
         _companyContextService = companyContextService;
@@ -105,7 +108,15 @@ public partial class MainWindowViewModel : ObservableObject
         SetActiveNav(invoices: true);
     }
 
-    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false, bool payroll = false, bool customers = false, bool invoices = false)
+    [RelayCommand]
+    private void NavigateToSettings()
+    {
+        CurrentPage = _serviceProvider.GetRequiredService<SettingsViewModel>();
+        CurrentPageTitle = "Settings";
+        SetActiveNav(settings: true);
+    }
+
+    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false, bool payroll = false, bool customers = false, bool invoices = false, bool settings = false)
     {
         IsDashboardActive = dashboard;
         IsEmployeesActive = employees;
@@ -113,6 +124,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsPayrollActive = payroll;
         IsCustomersActive = customers;
         IsInvoicesActive = invoices;
+        IsSettingsActive = settings;
     }
 
     [RelayCommand]

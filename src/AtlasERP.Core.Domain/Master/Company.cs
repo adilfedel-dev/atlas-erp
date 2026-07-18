@@ -14,6 +14,9 @@ public class Company : EntityBase
     public string LegalName { get; set; } = string.Empty;
     public string? LogoPath { get; set; }
 
+    /// <summary>Hex color (e.g. "#2CA01C") derived from the uploaded logo, or set manually. Used to brand printed documents.</summary>
+    public string? BrandColorHex { get; set; }
+
     /// <summary>
     /// Connection string to this company's dedicated database. Stored encrypted at rest
     /// (see Infrastructure connection-string protection); never logged in plain text.

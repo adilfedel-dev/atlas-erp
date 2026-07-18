@@ -13,16 +13,21 @@ public static class InvoiceDocumentBuilder
         var customer = invoice.Customer
             ?? throw new InvalidOperationException("Invoice must have its Customer loaded before printing.");
 
+        var accent = DocumentBrandingHelper.GetAccentBrush(company);
+
         var document = new FlowDocument
         {
             FontFamily = new FontFamily("Segoe UI"),
             FontSize = 12
         };
 
+        document.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
+
         document.Blocks.Add(new Paragraph(new Run("INVOICE"))
         {
             FontSize = 22,
             FontWeight = FontWeights.Bold,
+            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 2)
         });
         document.Blocks.Add(new Paragraph(new Run(invoice.InvoiceNumber))
@@ -73,10 +78,10 @@ public static class InvoiceDocumentBuilder
         lineItemsTable.RowGroups.Add(lineItemsRowGroup);
 
         var headerCellRow = new TableRow();
-        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Description")) { FontWeight = FontWeights.SemiBold }) { BorderBrush = Brushes.Black, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
-        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Qty")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = Brushes.Black, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
-        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Unit price")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = Brushes.Black, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
-        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Amount")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = Brushes.Black, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
+        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Description")) { FontWeight = FontWeights.SemiBold }) { BorderBrush = accent, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
+        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Qty")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = accent, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
+        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Unit price")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = accent, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
+        headerCellRow.Cells.Add(new TableCell(new Paragraph(new Run("Amount")) { FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Right }) { BorderBrush = accent, BorderThickness = new Thickness(0, 0, 0, 1), Padding = new Thickness(0, 0, 0, 4) });
         lineItemsRowGroup.Rows.Add(headerCellRow);
 
         foreach (var lineItem in invoice.LineItems)
@@ -101,16 +106,16 @@ public static class InvoiceDocumentBuilder
         summaryRowGroup.Rows.Add(BuildLabelValueRow($"Tax ({invoice.TaxRatePercent:0.##}%)", invoice.TaxAmount.ToString("C")));
 
         var totalRow = new TableRow();
-        totalRow.Cells.Add(new TableCell(new Paragraph(new Run("TOTAL")) { FontSize = 15, FontWeight = FontWeights.Bold })
+        totalRow.Cells.Add(new TableCell(new Paragraph(new Run("TOTAL")) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent })
         {
             Padding = new Thickness(0, 10, 0, 0),
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 1, 0, 0)
         });
-        totalRow.Cells.Add(new TableCell(new Paragraph(new Run(invoice.Total.ToString("C"))) { FontSize = 15, FontWeight = FontWeights.Bold, TextAlignment = TextAlignment.Right })
+        totalRow.Cells.Add(new TableCell(new Paragraph(new Run(invoice.Total.ToString("C"))) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent, TextAlignment = TextAlignment.Right })
         {
             Padding = new Thickness(0, 10, 0, 0),
-            BorderBrush = Brushes.Black,
+            BorderBrush = accent,
             BorderThickness = new Thickness(0, 1, 0, 0)
         });
         summaryRowGroup.Rows.Add(totalRow);
