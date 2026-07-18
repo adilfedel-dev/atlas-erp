@@ -1,0 +1,45 @@
+<Window x:Class="AtlasERP.Presentation.WPF.Views.InvoiceCreateView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New invoice"
+        Width="400" Height="440"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource Brush.Background.Window}">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="New invoice" Style="{StaticResource Text.Heading2}" Margin="0,0,0,16" />
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Customer *" Style="{StaticResource Text.Label}" />
+            <ComboBox ItemsSource="{Binding CustomerOptions}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedCustomer}"
+                      Margin="0,0,0,12" />
+
+            <TextBlock Text="Issue date" Style="{StaticResource Text.Label}" />
+            <DatePicker SelectedDate="{Binding IssueDate}" Margin="0,0,0,12" />
+
+            <TextBlock Text="Due date" Style="{StaticResource Text.Label}" />
+            <DatePicker SelectedDate="{Binding DueDate}" Margin="0,0,0,12" />
+
+            <TextBlock Text="Tax rate (%)" Style="{StaticResource Text.Label}" />
+            <TextBox Text="{Binding TaxRatePercent, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="{DynamicResource Brush.Error}"
+                       TextWrapping="Wrap"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,0,8,0" />
+            <Button Content="Create" Style="{StaticResource Button.Primary}" Command="{Binding ConfirmCommand}" IsDefault="True" />
+        </StackPanel>
+    </Grid>
+</Window>

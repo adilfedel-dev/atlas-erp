@@ -91,6 +91,8 @@ public partial class App : Application
         services.AddSingleton<IEmployeeService, EmployeeService>();
         services.AddSingleton<IContractService, ContractService>();
         services.AddSingleton<IPayrollService, PayrollService>();
+        services.AddSingleton<ICustomerService, CustomerService>();
+        services.AddSingleton<IInvoiceService, InvoiceService>();
 
         services.AddTransient<LoginViewModel>();
         services.AddTransient<LoginView>();
@@ -109,6 +111,14 @@ public partial class App : Application
         services.AddTransient<PayrollRunDetailView>();
         services.AddTransient<GenerateRunViewModel>();
         services.AddTransient<GenerateRunView>();
+        services.AddTransient<CustomerListViewModel>();
+        services.AddTransient<CustomerEditViewModel>();
+        services.AddTransient<CustomerEditView>();
+        services.AddTransient<InvoiceListViewModel>();
+        services.AddTransient<InvoiceCreateViewModel>();
+        services.AddTransient<InvoiceCreateView>();
+        services.AddTransient<InvoiceDetailViewModel>();
+        services.AddTransient<InvoiceDetailView>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
     }

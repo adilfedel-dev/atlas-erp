@@ -1,5 +1,6 @@
 using AtlasERP.Core.Domain.HumanResources;
 using AtlasERP.Core.Domain.Payroll;
+using AtlasERP.Core.Domain.Sales;
 using Microsoft.EntityFrameworkCore;
 
 namespace AtlasERP.Infrastructure.PerCompany;
@@ -22,6 +23,10 @@ public class CompanyDbContext : DbContext
     public DbSet<PayrollRun> PayrollRuns => Set<PayrollRun>();
     public DbSet<Payslip> Payslips => Set<Payslip>();
     public DbSet<PayslipLineItem> PayslipLineItems => Set<PayslipLineItem>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Invoice> Invoices => Set<Invoice>();
+    public DbSet<InvoiceLineItem> InvoiceLineItems => Set<InvoiceLineItem>();
+    public DbSet<Receipt> Receipts => Set<Receipt>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
