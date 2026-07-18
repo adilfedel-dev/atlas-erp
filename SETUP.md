@@ -40,7 +40,7 @@ dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --s
 
 **3. Generate the per-company DB migration**
 ```
-dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir Company/Migrations
+dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir PerCompany/Migrations
 ```
 
 **4. Run the app**
@@ -80,6 +80,6 @@ Same pattern as Employees: a domain entity under `Core.Domain`, an
 ViewModel/View pair in `Presentation.WPF`, then a `DataTemplate` + nav button in
 `MainWindow.xaml`. After adding entities, generate a new migration:
 ```
-dotnet ef migrations add <Name> --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir Company/Migrations
+dotnet ef migrations add <Name> --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir PerCompany/Migrations
 ```
 It gets applied to all four company databases automatically on next launch.
