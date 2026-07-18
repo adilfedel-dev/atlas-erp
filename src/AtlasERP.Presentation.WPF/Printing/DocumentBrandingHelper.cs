@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -51,7 +52,7 @@ public static class DocumentBrandingHelper
                 bitmap.EndInit();
                 bitmap.Freeze();
 
-                var image = new System.Windows.Controls.Image
+                var image = new Image
                 {
                     Source = bitmap,
                     Height = 44,
@@ -67,7 +68,7 @@ public static class DocumentBrandingHelper
             }
         }
 
-        var nameBlock = new System.Windows.Controls.TextBlock
+        var nameBlock = new TextBlock
         {
             Text = company.LegalName,
             FontSize = 16,
