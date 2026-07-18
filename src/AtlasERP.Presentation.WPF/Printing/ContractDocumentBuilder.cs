@@ -33,7 +33,7 @@ public static class ContractDocumentBuilder
 
         var detailsTable = new Table { CellSpacing = 0 };
         detailsTable.Columns.Add(new TableColumn { Width = new GridLength(170) });
-        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(500) });
         var rowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(rowGroup);
 
@@ -58,9 +58,9 @@ public static class ContractDocumentBuilder
         }
 
         var signatureTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 60, 0, 0) };
-        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(330) });
         signatureTable.Columns.Add(new TableColumn { Width = new GridLength(40) });
-        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(330) });
         var signatureRowGroup = new TableRowGroup();
         signatureTable.RowGroups.Add(signatureRowGroup);
 

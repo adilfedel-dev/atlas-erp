@@ -35,7 +35,7 @@ public static class TravelExpenseReportDocumentBuilder
 
         var detailsTable = new Table { CellSpacing = 0 };
         detailsTable.Columns.Add(new TableColumn { Width = new GridLength(170) });
-        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(500) });
         var detailsRowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(detailsRowGroup);
 
@@ -57,7 +57,7 @@ public static class TravelExpenseReportDocumentBuilder
         var lineItemsTable = new Table { CellSpacing = 0 };
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(90) });
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(100) });
-        lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(380) });
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(100) });
         var lineItemsRowGroup = new TableRowGroup();
         lineItemsTable.RowGroups.Add(lineItemsRowGroup);
@@ -82,7 +82,7 @@ public static class TravelExpenseReportDocumentBuilder
         document.Blocks.Add(lineItemsTable);
 
         var totalTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 16, 0, 0) };
-        totalTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        totalTable.Columns.Add(new TableColumn { Width = new GridLength(520) });
         totalTable.Columns.Add(new TableColumn { Width = new GridLength(150) });
         var totalRowGroup = new TableRowGroup();
         totalTable.RowGroups.Add(totalRowGroup);
@@ -104,9 +104,9 @@ public static class TravelExpenseReportDocumentBuilder
         document.Blocks.Add(totalTable);
 
         var signatureTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 50, 0, 0) };
-        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(330) });
         signatureTable.Columns.Add(new TableColumn { Width = new GridLength(40) });
-        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        signatureTable.Columns.Add(new TableColumn { Width = new GridLength(330) });
         var signatureRowGroup = new TableRowGroup();
         signatureTable.RowGroups.Add(signatureRowGroup);
 

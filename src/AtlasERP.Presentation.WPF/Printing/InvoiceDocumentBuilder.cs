@@ -37,8 +37,8 @@ public static class InvoiceDocumentBuilder
         });
 
         var headerTable = new Table { CellSpacing = 0 };
-        headerTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
-        headerTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        headerTable.Columns.Add(new TableColumn { Width = new GridLength(335) });
+        headerTable.Columns.Add(new TableColumn { Width = new GridLength(335) });
         var headerRowGroup = new TableRowGroup();
         headerTable.RowGroups.Add(headerRowGroup);
 
@@ -61,7 +61,7 @@ public static class InvoiceDocumentBuilder
 
         var datesTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 16, 0, 24) };
         datesTable.Columns.Add(new TableColumn { Width = new GridLength(150) });
-        datesTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        datesTable.Columns.Add(new TableColumn { Width = new GridLength(520) });
         var datesRowGroup = new TableRowGroup();
         datesTable.RowGroups.Add(datesRowGroup);
         datesRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Issue date", invoice.IssueDate.ToString("d"), rightAlignValue: true));
@@ -70,7 +70,7 @@ public static class InvoiceDocumentBuilder
         document.Blocks.Add(datesTable);
 
         var lineItemsTable = new Table { CellSpacing = 0 };
-        lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(380) });
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(80) });
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(100) });
         lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(110) });
@@ -97,7 +97,7 @@ public static class InvoiceDocumentBuilder
         document.Blocks.Add(lineItemsTable);
 
         var summaryTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 20, 0, 0) };
-        summaryTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
+        summaryTable.Columns.Add(new TableColumn { Width = new GridLength(520) });
         summaryTable.Columns.Add(new TableColumn { Width = new GridLength(150) });
         var summaryRowGroup = new TableRowGroup();
         summaryTable.RowGroups.Add(summaryRowGroup);
