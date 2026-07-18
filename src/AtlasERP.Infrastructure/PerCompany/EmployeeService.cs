@@ -2,7 +2,7 @@ using AtlasERP.Core.Application.Abstractions;
 using AtlasERP.Core.Domain.HumanResources;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasERP.Infrastructure.Company;
+namespace AtlasERP.Infrastructure.PerCompany;
 
 /// <summary>
 /// Every method opens its own CompanyDbContext against whatever company is currently

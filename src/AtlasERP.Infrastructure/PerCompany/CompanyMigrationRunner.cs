@@ -1,7 +1,7 @@
 using AtlasERP.Infrastructure.Master;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasERP.Infrastructure.Company;
+namespace AtlasERP.Infrastructure.PerCompany;
 
 /// <summary>
 /// Applies pending EF Core migrations to every registered company's database in one

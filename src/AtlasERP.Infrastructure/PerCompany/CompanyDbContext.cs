@@ -1,7 +1,7 @@
 using AtlasERP.Core.Domain.HumanResources;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasERP.Infrastructure.Company;
+namespace AtlasERP.Infrastructure.PerCompany;
 
 /// <summary>
 /// Schema shared identically by all four per-company databases: employees, payroll,

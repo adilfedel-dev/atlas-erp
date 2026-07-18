@@ -2,7 +2,7 @@ using AtlasERP.Core.Domain.HumanResources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AtlasERP.Infrastructure.Company.Configurations;
+namespace AtlasERP.Infrastructure.PerCompany.Configurations;
 
 public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {

@@ -1,6 +1,6 @@
 using AtlasERP.Core.Domain.Master;
 
-namespace AtlasERP.Infrastructure.Company;
+namespace AtlasERP.Infrastructure.PerCompany;
 
 /// <summary>
 /// Creates a <see cref="CompanyDbContext"/> targeting a specific company's database.

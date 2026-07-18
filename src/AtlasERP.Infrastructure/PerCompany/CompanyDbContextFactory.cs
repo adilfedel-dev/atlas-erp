@@ -1,7 +1,7 @@
 using AtlasERP.Core.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasERP.Infrastructure.Company;
+namespace AtlasERP.Infrastructure.PerCompany;
 
 public class CompanyDbContextFactory : ICompanyDbContextFactory
 {

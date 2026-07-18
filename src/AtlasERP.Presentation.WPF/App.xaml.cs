@@ -2,7 +2,7 @@ using System.IO;
 using System.Windows;
 using AtlasERP.Core.Application.Abstractions;
 using AtlasERP.Core.Application.Services;
-using AtlasERP.Infrastructure.Company;
+using AtlasERP.Infrastructure.PerCompany;
 using AtlasERP.Infrastructure.Master;
 using AtlasERP.Presentation.WPF.Navigation;
 using AtlasERP.Presentation.WPF.Themes;
