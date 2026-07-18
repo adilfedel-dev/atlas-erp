@@ -17,7 +17,7 @@ public class CompanyDbContextFactory : ICompanyDbContextFactory
         ArgumentNullException.ThrowIfNull(company);
 
         var optionsBuilder = new DbContextOptionsBuilder<CompanyDbContext>();
-        optionsBuilder.UseSqlServer(company.ConnectionString);
+        optionsBuilder.UseSqlite(company.ConnectionString);
 
         return new CompanyDbContext(optionsBuilder.Options);
     }

@@ -39,7 +39,7 @@ public partial class App : Application
                 config.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
                 config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
             })
-            .ConfigureServices((context, services) => ConfigureServices(context.Configuration, services))
+            .ConfigureServices((_, services) => ConfigureServices(services))
             .Build();
 
         await _host.StartAsync();
@@ -52,7 +52,7 @@ public partial class App : Application
         {
             Log.Error(ex, "Failed to prepare the Master database on startup.");
             MessageBox.Show(
-                $"Could not connect to or prepare the Master database.\n\n{ex.Message}\n\nCheck the connection string in appsettings.json and that SQL Server / LocalDB is running.",
+                $"Could not prepare the Master database.\n\n{ex.Message}",
                 "AtlasERP — Startup Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
@@ -66,10 +66,15 @@ public partial class App : Application
         navigation.ShowLogin();
     }
 
-    private static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
+    private static void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContextFactory<MasterDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("MasterDb")));
+        {
+            var dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            Directory.CreateDirectory(dataDirectory);
+            var masterDbPath = Path.Combine(dataDirectory, "AtlasERP_Master.db");
+            options.UseSqlite($"Data Source={masterDbPath}");
+        });
 
         services.AddSingleton<ICompanyContextService, CompanyContextService>();
         services.AddSingleton<ICompanyDbContextFactory, CompanyDbContextFactory>();

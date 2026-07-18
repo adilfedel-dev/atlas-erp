@@ -12,12 +12,17 @@ WPF only builds and runs on **Windows**. Clone this repo on a Windows machine:
 - **.NET 8 SDK** — https://dotnet.microsoft.com/download/dotnet/8.0
 - **Visual Studio 2022** with the ".NET desktop development" workload (recommended), or
   just the `dotnet` CLI if you prefer the terminal
-- **SQL Server LocalDB** — included with Visual Studio, or install "SQL Server Express
-  LocalDB" standalone
 - **EF Core CLI tools**, if not already installed:
   ```
   dotnet tool install --global dotnet-ef
   ```
+
+No database server to install — each company's database is a **SQLite file**, created
+automatically next to the built app (in a `Data/` folder). This keeps local setup to
+just the two prerequisites above; a real SQL Server can be swapped in later (change
+`UseSqlite` → `UseSqlServer` in `Infrastructure/Master/MasterDbContext`'s and
+`Infrastructure/PerCompany/CompanyDbContext`'s factories, and update the connection
+strings) once multiple people need to access the same data over a network.
 
 ## First-time setup
 
@@ -44,10 +49,10 @@ dotnet run --project src/AtlasERP.Presentation.WPF
 ```
 
 On first launch the app will, in order:
-- Apply the Master DB migration (creates `AtlasERP_Master` on LocalDB automatically)
-- Seed a default admin user and **four placeholder companies** (Brand One–Four, all
-  pointing at LocalDB databases named `AtlasERP_Brand1`–`4`)
-- Apply the per-company migration to all four of those databases
+- Apply the Master DB migration (creates `Data/AtlasERP_Master.db` next to the built exe)
+- Seed a default admin user and **four placeholder companies** (Brand One–Four, each
+  pointing at its own SQLite file: `Data/AtlasERP_Brand1.db`–`4.db`)
+- Apply the per-company migration to all four of those files
 
 **5. Sign in**
 - Username: `admin`

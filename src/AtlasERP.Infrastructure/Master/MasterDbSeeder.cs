@@ -55,6 +55,9 @@ public class MasterDbSeeder
         };
         adminUser.UserRoles.Add(new UserRole { User = adminUser, Role = adminRole });
 
+        var dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+        Directory.CreateDirectory(dataDirectory);
+
         var companies = new[]
         {
             new Company
@@ -62,28 +65,28 @@ public class MasterDbSeeder
                 Code = "BRAND1",
                 Name = "Brand One",
                 LegalName = "Brand One Ltd.",
-                ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AtlasERP_Brand1;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ConnectionString = $"Data Source={Path.Combine(dataDirectory, "AtlasERP_Brand1.db")}"
             },
             new Company
             {
                 Code = "BRAND2",
                 Name = "Brand Two",
                 LegalName = "Brand Two Ltd.",
-                ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AtlasERP_Brand2;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ConnectionString = $"Data Source={Path.Combine(dataDirectory, "AtlasERP_Brand2.db")}"
             },
             new Company
             {
                 Code = "BRAND3",
                 Name = "Brand Three",
                 LegalName = "Brand Three Ltd.",
-                ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AtlasERP_Brand3;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ConnectionString = $"Data Source={Path.Combine(dataDirectory, "AtlasERP_Brand3.db")}"
             },
             new Company
             {
                 Code = "BRAND4",
                 Name = "Brand Four",
                 LegalName = "Brand Four Ltd.",
-                ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AtlasERP_Brand4;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ConnectionString = $"Data Source={Path.Combine(dataDirectory, "AtlasERP_Brand4.db")}"
             }
         };
 
