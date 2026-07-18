@@ -118,25 +118,34 @@
                             Background="{TemplateBinding Background}"
                             CornerRadius="8">
                         <Border.Effect>
-                            <DropShadowEffect x:Name="ButtonShadow" Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+                            <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
                         </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" />
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- DropShadowEffect isn't a FrameworkElement, so a Trigger can't reach into it
+                             to tweak individual properties via TargetName — replace the whole Effect
+                             object instead, which is the standard WPF workaround. -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ButtonShadow" Property="ShadowDepth" Value="5" />
-                            <Setter TargetName="ButtonShadow" Property="BlurRadius" Value="16" />
-                            <Setter TargetName="ButtonShadow" Property="Opacity" Value="0.7" />
+                            <Setter TargetName="ButtonBorder" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="5" BlurRadius="16" Opacity="0.7" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.85" />
-                            <Setter TargetName="ButtonShadow" Property="ShadowDepth" Value="1" />
+                            <Setter TargetName="ButtonBorder" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="1" BlurRadius="6" Opacity="0.4" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="ButtonShadow" Property="Opacity" Value="0" />
+                            <Setter TargetName="ButtonBorder" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
