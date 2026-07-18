@@ -7,7 +7,7 @@
     <!-- ===== Typography ===== -->
 
     <Style x:Key="Text.Heading1" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontSize" Value="32" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
     </Style>
@@ -15,6 +15,14 @@
     <Style x:Key="Text.Heading2" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="19" />
         <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
+    </Style>
+
+    <!-- Large numeric displays (stat tiles, financial totals) — a light weight at a big
+         size reads as considered/elegant rather than just "bold and big". -->
+    <Style x:Key="Text.Display" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="FontWeight" Value="Light" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
     </Style>
 
@@ -38,29 +46,28 @@
     <!-- ===== Card ===== -->
 
     <Style x:Key="Panel.Card" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{DynamicResource Brush.Card.Sheen}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Card.EdgeHighlight}" />
+        <Setter Property="Background" Value="{DynamicResource Brush.Background.Surface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="Padding" Value="20" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="Padding" Value="24" />
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="{DynamicResource Color.Shadow}" Direction="270" ShadowDepth="6" BlurRadius="24" Opacity="0.35" />
+                <DropShadowEffect Color="{DynamicResource Color.Shadow}" Direction="270" ShadowDepth="2" BlurRadius="16" Opacity="0.08" />
             </Setter.Value>
         </Setter>
     </Style>
 
     <!-- Dark, always-elevated showcase card — used for the dashboard hero and other
-         "premium" focal points, deliberately distinct from the regular surface cards. -->
+         focal points, deliberately distinct from the regular flat surface cards. -->
     <Style x:Key="Panel.Hero" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Brush.Hero.Gradient}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Gold}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="Padding" Value="28" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Padding" Value="32" />
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="{DynamicResource Color.Shadow}" Direction="270" ShadowDepth="10" BlurRadius="32" Opacity="0.45" />
+                <DropShadowEffect Color="{DynamicResource Color.Shadow}" Direction="270" ShadowDepth="8" BlurRadius="28" Opacity="0.22" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -82,7 +89,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="7">
+                            CornerRadius="10">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" />
@@ -109,20 +116,20 @@
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Padding" Value="16,10" />
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="Background" Value="{DynamicResource Brush.Accent.Gradient}" />
+        <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ButtonBorder"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="8"
+                            CornerRadius="10"
                             RenderTransformOrigin="0.5,0.5">
                         <Border.RenderTransform>
                             <ScaleTransform x:Name="ButtonScale" ScaleX="1" ScaleY="1" />
                         </Border.RenderTransform>
                         <Border.Effect>
-                            <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+                            <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="2" BlurRadius="8" Opacity="0.3" />
                         </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
@@ -136,9 +143,10 @@
                              fine via Storyboard.TargetName inside EnterActions/ExitActions, which is a
                              different, storyboard-based targeting mechanism than a plain Setter. -->
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource Brush.AccentHover}" />
                             <Setter TargetName="ButtonBorder" Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="5" BlurRadius="16" Opacity="0.7" />
+                                    <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="4" BlurRadius="14" Opacity="0.4" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -176,32 +184,76 @@
         </Setter>
     </Style>
 
-    <!-- Sidebar nav button: transparent by default, tinted+left-bar when active (IsChecked via ToggleButton usage), hover feedback -->
+    <!-- Sidebar nav item: a plain row that becomes a solid filled pill when active,
+         rather than a tinted block with a colored left-bar indicator. -->
     <Style x:Key="Button.NavItem" TargetType="{x:Type ToggleButton}">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontSize" Value="13.5" />
-        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Padding" Value="14,9" />
+        <Setter Property="Margin" Value="0,1" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.OnDarkMuted}" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid>
-                        <Border x:Name="ActiveBar" Width="3" HorizontalAlignment="Left" Margin="0,4" CornerRadius="2" Background="{DynamicResource Brush.Gold}" Opacity="0" />
-                        <Border x:Name="ItemBorder" Background="{TemplateBinding Background}" CornerRadius="7" Margin="6,2">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
-                        </Border>
-                    </Grid>
+                    <Border x:Name="ItemBorder" Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#14FFFFFF" />
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource Brush.Background.Hover}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#1FFFFFFF" />
-                            <Setter TargetName="ActiveBar" Property="Opacity" Value="1" />
-                            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.OnDark}" />
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource Brush.Accent}" />
+                            <Setter Property="Foreground" Value="White" />
                             <Setter Property="FontWeight" Value="SemiBold" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Custom window chrome ===== -->
+
+    <Style x:Key="Button.WindowControl" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="42" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Brush.Background.Hover}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Button.WindowControl.Close" BasedOn="{StaticResource Button.WindowControl}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#E81123" />
+                            <Setter Property="Foreground" Value="White" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -226,7 +278,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="7">
+                            CornerRadius="9">
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -257,7 +309,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="7">
+                            CornerRadius="9">
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -317,8 +369,8 @@
         <Setter Property="RowBackground" Value="{DynamicResource Brush.Background.Surface}" />
         <Setter Property="AlternatingRowBackground" Value="{DynamicResource Brush.Background.Hover}" />
         <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource Brush.Border}" />
-        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource Brush.Border}" />
-        <Setter Property="RowHeight" Value="38" />
+        <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
+        <Setter Property="RowHeight" Value="42" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="ColumnHeaderHeight" Value="38" />
     </Style>

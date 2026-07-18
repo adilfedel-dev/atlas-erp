@@ -37,8 +37,6 @@
                             Width="76" Height="76"
                             CornerRadius="14"
                             Background="#14FFFFFF"
-                            BorderBrush="{DynamicResource Brush.Gold}"
-                            BorderThickness="1"
                             Margin="0,0,24,0"
                             Visibility="{Binding HasLogo, Converter={StaticResource BoolToVisibleConverter}}">
                         <Image Source="{Binding LogoPath, Converter={StaticResource PathToImageSourceConverter}}"
@@ -64,15 +62,14 @@
                 <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
                     <StackPanel>
                         <TextBlock Text="TOTAL EMPLOYEES" Style="{StaticResource Text.Caption}" />
-                        <TextBlock Text="{Binding TotalEmployeeCount}" FontSize="34" FontWeight="Bold"
-                                   Foreground="{DynamicResource Brush.Text.Primary}" Margin="0,6,0,0" />
+                        <TextBlock Text="{Binding TotalEmployeeCount}" Style="{StaticResource Text.Display}" Margin="0,6,0,0" />
                     </StackPanel>
                 </Border>
 
                 <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
                     <StackPanel>
                         <TextBlock Text="ACTIVE" Style="{StaticResource Text.Caption}" />
-                        <TextBlock Text="{Binding ActiveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                        <TextBlock Text="{Binding ActiveEmployeeCount}" Style="{StaticResource Text.Display}"
                                    Foreground="{DynamicResource Brush.Success}" Margin="0,6,0,0" />
                     </StackPanel>
                 </Border>
@@ -80,7 +77,7 @@
                 <Border Style="{StaticResource Panel.Card}" Width="220">
                     <StackPanel>
                         <TextBlock Text="ON LEAVE" Style="{StaticResource Text.Caption}" />
-                        <TextBlock Text="{Binding OnLeaveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                        <TextBlock Text="{Binding OnLeaveEmployeeCount}" Style="{StaticResource Text.Display}"
                                    Foreground="{DynamicResource Brush.Warning}" Margin="0,6,0,0" />
                     </StackPanel>
                 </Border>

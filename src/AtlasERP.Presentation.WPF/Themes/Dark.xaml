@@ -1,29 +1,25 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="Brush.Background.Window" Color="#0B0D12" />
-    <SolidColorBrush x:Key="Brush.Background.Surface" Color="#181B24" />
-    <SolidColorBrush x:Key="Brush.Background.Sidebar" Color="#08090D" />
-    <SolidColorBrush x:Key="Brush.Background.Hover" Color="#222633" />
-    <SolidColorBrush x:Key="Brush.Background.Selected" Color="#1E3A2A" />
+    <!-- Monochrome-first canvas: the window is a quiet near-black tone, surfaces (cards,
+         the floating sidebar) sit one step lighter, and color is reserved for the accent. -->
+    <SolidColorBrush x:Key="Brush.Background.Window" Color="#0C0D0F" />
+    <SolidColorBrush x:Key="Brush.Background.Surface" Color="#1A1B1E" />
+    <SolidColorBrush x:Key="Brush.Background.Hover" Color="#232427" />
+    <SolidColorBrush x:Key="Brush.Background.Selected" Color="#173322" />
 
-    <SolidColorBrush x:Key="Brush.Text.Primary" Color="#F3F4F8" />
-    <SolidColorBrush x:Key="Brush.Text.Secondary" Color="#9AA0AC" />
-    <SolidColorBrush x:Key="Brush.Text.OnDark" Color="#F3F4F8" />
+    <SolidColorBrush x:Key="Brush.Text.Primary" Color="#F4F4F5" />
+    <SolidColorBrush x:Key="Brush.Text.Secondary" Color="#A1A1AA" />
+    <SolidColorBrush x:Key="Brush.Text.OnDark" Color="#F4F4F5" />
     <SolidColorBrush x:Key="Brush.Text.OnDarkMuted" Color="#8992B0" />
 
     <Color x:Key="Color.Accent">#22C55E</Color>
     <SolidColorBrush x:Key="Brush.Accent" Color="{StaticResource Color.Accent}" />
     <SolidColorBrush x:Key="Brush.AccentHover" Color="#3FDA73" />
-    <SolidColorBrush x:Key="Brush.AccentMuted" Color="#163223" />
+    <SolidColorBrush x:Key="Brush.AccentMuted" Color="#153524" />
 
-    <!-- Secondary "luxury" accent used sparingly: hero borders, dividers, premium badges -->
-    <Color x:Key="Color.Gold">#D4AF37</Color>
-    <SolidColorBrush x:Key="Brush.Gold" Color="{StaticResource Color.Gold}" />
-    <SolidColorBrush x:Key="Brush.GoldMuted" Color="#3A331A" />
-
-    <SolidColorBrush x:Key="Brush.Border" Color="#262A36" />
-    <SolidColorBrush x:Key="Brush.BorderStrong" Color="#3C4256" />
+    <SolidColorBrush x:Key="Brush.Border" Color="#28292D" />
+    <SolidColorBrush x:Key="Brush.BorderStrong" Color="#3A3C42" />
 
     <SolidColorBrush x:Key="Brush.Success" Color="#3FC98A" />
     <SolidColorBrush x:Key="Brush.Warning" Color="#E3A63E" />
@@ -32,32 +28,18 @@
     <Color x:Key="Color.Shadow">#77000000</Color>
     <Color x:Key="Color.ShadowSoft">#40000000</Color>
 
+    <!-- The sidebar floats on the window canvas, one step lighter than the window
+         background — not a separate dark-navy block. -->
     <LinearGradientBrush x:Key="Brush.Sidebar.Gradient" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#111420" Offset="0" />
-        <GradientStop Color="#05060A" Offset="1" />
+        <GradientStop Color="#1D1E22" Offset="0" />
+        <GradientStop Color="#18191C" Offset="1" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="Brush.Accent.Gradient" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#2FE374" Offset="0" />
-        <GradientStop Color="#1AA34D" Offset="1" />
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Brush.Accent.Gradient" Color="{StaticResource Color.Accent}" />
 
     <LinearGradientBrush x:Key="Brush.Hero.Gradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#1B2030" Offset="0" />
-        <GradientStop Color="#262C40" Offset="1" />
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="Brush.Card.Sheen" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#1D212C" Offset="0" />
-        <GradientStop Color="#181B24" Offset="1" />
-    </LinearGradientBrush>
-
-    <!-- A slightly lighter tone on the top-left edge, as if catching light — the "glass edge"
-         approximation used on every card since true backdrop blur isn't safely available in WPF. -->
-    <LinearGradientBrush x:Key="Brush.Card.EdgeHighlight" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#3A4152" Offset="0" />
-        <GradientStop Color="#262A36" Offset="0.4" />
-        <GradientStop Color="#262A36" Offset="1" />
+        <GradientStop Color="#212226" Offset="0" />
+        <GradientStop Color="#2C2D32" Offset="1" />
     </LinearGradientBrush>
 
 </ResourceDictionary>
