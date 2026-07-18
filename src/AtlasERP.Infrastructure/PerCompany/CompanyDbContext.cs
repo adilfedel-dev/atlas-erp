@@ -1,3 +1,4 @@
+using AtlasERP.Core.Domain.Expenses;
 using AtlasERP.Core.Domain.HumanResources;
 using AtlasERP.Core.Domain.Payroll;
 using AtlasERP.Core.Domain.Sales;
@@ -27,6 +28,8 @@ public class CompanyDbContext : DbContext
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<InvoiceLineItem> InvoiceLineItems => Set<InvoiceLineItem>();
     public DbSet<Receipt> Receipts => Set<Receipt>();
+    public DbSet<TravelExpenseReport> TravelExpenseReports => Set<TravelExpenseReport>();
+    public DbSet<TravelExpenseLineItem> TravelExpenseLineItems => Set<TravelExpenseLineItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

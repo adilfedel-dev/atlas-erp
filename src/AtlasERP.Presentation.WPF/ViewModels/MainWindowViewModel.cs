@@ -43,6 +43,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isSettingsActive;
 
+    [ObservableProperty]
+    private bool _isTravelExpensesActive;
+
     public MainWindowViewModel(ICompanyContextService companyContextService, IServiceProvider serviceProvider, IAppNavigation appNavigation)
     {
         _companyContextService = companyContextService;
@@ -109,6 +112,14 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void NavigateToTravelExpenses()
+    {
+        CurrentPage = _serviceProvider.GetRequiredService<TravelExpenseListViewModel>();
+        CurrentPageTitle = "Travel Expenses";
+        SetActiveNav(travelExpenses: true);
+    }
+
+    [RelayCommand]
     private void NavigateToSettings()
     {
         CurrentPage = _serviceProvider.GetRequiredService<SettingsViewModel>();
@@ -116,7 +127,7 @@ public partial class MainWindowViewModel : ObservableObject
         SetActiveNav(settings: true);
     }
 
-    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false, bool payroll = false, bool customers = false, bool invoices = false, bool settings = false)
+    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false, bool payroll = false, bool customers = false, bool invoices = false, bool settings = false, bool travelExpenses = false)
     {
         IsDashboardActive = dashboard;
         IsEmployeesActive = employees;
@@ -125,6 +136,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsCustomersActive = customers;
         IsInvoicesActive = invoices;
         IsSettingsActive = settings;
+        IsTravelExpensesActive = travelExpenses;
     }
 
     [RelayCommand]

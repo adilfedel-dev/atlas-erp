@@ -31,6 +31,9 @@
         <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
             <views:SettingsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TravelExpenseListViewModel}">
+            <views:TravelExpenseListView />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -95,6 +98,10 @@
                                   Command="{Binding NavigateToInvoicesCommand}"
                                   IsChecked="{Binding IsInvoicesActive, Mode=OneWay}"
                                   Content="Invoices" />
+                    <ToggleButton Style="{StaticResource Button.NavItem}"
+                                  Command="{Binding NavigateToTravelExpensesCommand}"
+                                  IsChecked="{Binding IsTravelExpensesActive, Mode=OneWay}"
+                                  Content="Travel Expenses" />
                 </StackPanel>
             </DockPanel>
         </Border>
