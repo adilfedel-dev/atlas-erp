@@ -25,11 +25,11 @@ public static class TravelExpenseReportDocumentBuilder
 
         document.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
 
-        document.Blocks.Add(new Paragraph(new Run("TRAVEL EXPENSE REPORT"))
+        document.Blocks.Add(new Paragraph(new Run("Travel Expense Report"))
         {
+            FontFamily = DocumentBrandingHelper.HeadingFontFamily,
             FontSize = 20,
             FontWeight = FontWeights.Bold,
-            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 24)
         });
 
@@ -39,12 +39,12 @@ public static class TravelExpenseReportDocumentBuilder
         var detailsRowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(detailsRowGroup);
 
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})"));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Destination", report.Destination));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Purpose", report.Purpose));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Departure", report.DepartureDate.ToString("d")));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Return", report.ReturnDate.ToString("d")));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Status", report.Status.ToString()));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})"));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Destination", report.Destination));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Purpose", report.Purpose));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Departure", report.DepartureDate.ToString("d")));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Return", report.ReturnDate.ToString("d")));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Status", report.Status.ToString()));
 
         document.Blocks.Add(detailsTable);
 
@@ -173,19 +173,5 @@ public static class TravelExpenseReportDocumentBuilder
         }
 
         return cell;
-    }
-
-    private static TableRow BuildLabelValueRow(string label, string value)
-    {
-        var row = new TableRow();
-        row.Cells.Add(new TableCell(new Paragraph(new Run(label)) { FontWeight = FontWeights.SemiBold })
-        {
-            Padding = new Thickness(0, 4, 0, 4)
-        });
-        row.Cells.Add(new TableCell(new Paragraph(new Run(value)))
-        {
-            Padding = new Thickness(0, 4, 0, 4)
-        });
-        return row;
     }
 }

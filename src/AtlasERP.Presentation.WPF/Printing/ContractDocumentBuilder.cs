@@ -23,11 +23,11 @@ public static class ContractDocumentBuilder
 
         document.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
 
-        document.Blocks.Add(new Paragraph(new Run("EMPLOYMENT CONTRACT"))
+        document.Blocks.Add(new Paragraph(new Run("Employment Contract"))
         {
-            FontSize = 20,
+            FontFamily = DocumentBrandingHelper.HeadingFontFamily,
+            FontSize = 22,
             FontWeight = FontWeights.Bold,
-            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 28)
         });
 
@@ -37,27 +37,13 @@ public static class ContractDocumentBuilder
         var rowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(rowGroup);
 
-        void AddRow(string label, string value)
-        {
-            var row = new TableRow();
-            row.Cells.Add(new TableCell(new Paragraph(new Run(label)) { FontWeight = FontWeights.SemiBold })
-            {
-                Padding = new Thickness(0, 5, 0, 5)
-            });
-            row.Cells.Add(new TableCell(new Paragraph(new Run(value)))
-            {
-                Padding = new Thickness(0, 5, 0, 5)
-            });
-            rowGroup.Rows.Add(row);
-        }
-
-        AddRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})");
-        AddRow("Job title", employee.JobTitle);
-        AddRow("Contract type", contract.ContractType.ToString());
-        AddRow("Start date", contract.StartDate.ToString("d"));
-        AddRow("End date", contract.EndDate?.ToString("d") ?? "Open-ended");
-        AddRow("Base salary", contract.BaseSalaryAtSigning.ToString("C"));
-        AddRow("Status", contract.Status.ToString());
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})"));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Job title", employee.JobTitle));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Contract type", contract.ContractType.ToString()));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Start date", contract.StartDate.ToString("d")));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("End date", contract.EndDate?.ToString("d") ?? "Open-ended"));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Base salary", contract.BaseSalaryAtSigning.ToString("C"), accent));
+        rowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Status", contract.Status.ToString()));
 
         document.Blocks.Add(detailsTable);
 

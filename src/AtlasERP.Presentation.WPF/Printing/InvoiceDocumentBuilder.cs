@@ -23,11 +23,11 @@ public static class InvoiceDocumentBuilder
 
         document.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
 
-        document.Blocks.Add(new Paragraph(new Run("INVOICE"))
+        document.Blocks.Add(new Paragraph(new Run("Invoice"))
         {
-            FontSize = 22,
+            FontFamily = DocumentBrandingHelper.HeadingFontFamily,
+            FontSize = 24,
             FontWeight = FontWeights.Bold,
-            Foreground = accent,
             Margin = new Thickness(0, 0, 0, 2)
         });
         document.Blocks.Add(new Paragraph(new Run(invoice.InvoiceNumber))
@@ -64,9 +64,9 @@ public static class InvoiceDocumentBuilder
         datesTable.Columns.Add(new TableColumn { Width = new GridLength(1, GridUnitType.Star) });
         var datesRowGroup = new TableRowGroup();
         datesTable.RowGroups.Add(datesRowGroup);
-        datesRowGroup.Rows.Add(BuildLabelValueRow("Issue date", invoice.IssueDate.ToString("d")));
-        datesRowGroup.Rows.Add(BuildLabelValueRow("Due date", invoice.DueDate.ToString("d")));
-        datesRowGroup.Rows.Add(BuildLabelValueRow("Status", invoice.Status.ToString()));
+        datesRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Issue date", invoice.IssueDate.ToString("d"), rightAlignValue: true));
+        datesRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Due date", invoice.DueDate.ToString("d"), rightAlignValue: true));
+        datesRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Status", invoice.Status.ToString(), rightAlignValue: true));
         document.Blocks.Add(datesTable);
 
         var lineItemsTable = new Table { CellSpacing = 0 };
@@ -102,8 +102,8 @@ public static class InvoiceDocumentBuilder
         var summaryRowGroup = new TableRowGroup();
         summaryTable.RowGroups.Add(summaryRowGroup);
 
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Subtotal", invoice.Subtotal.ToString("C")));
-        summaryRowGroup.Rows.Add(BuildLabelValueRow($"Tax ({invoice.TaxRatePercent:0.##}%)", invoice.TaxAmount.ToString("C")));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Subtotal", invoice.Subtotal.ToString("C"), rightAlignValue: true));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow($"Tax ({invoice.TaxRatePercent:0.##}%)", invoice.TaxAmount.ToString("C"), rightAlignValue: true));
 
         var totalRow = new TableRow();
         totalRow.Cells.Add(new TableCell(new Paragraph(new Run("TOTAL")) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent })
@@ -121,8 +121,8 @@ public static class InvoiceDocumentBuilder
         summaryRowGroup.Rows.Add(totalRow);
 
         var amountPaid = invoice.Receipts.Sum(r => r.Amount);
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Amount paid", amountPaid.ToString("C")));
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Balance due", (invoice.Total - amountPaid).ToString("C")));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Amount paid", amountPaid.ToString("C"), rightAlignValue: true));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Balance due", (invoice.Total - amountPaid).ToString("C"), rightAlignValue: true));
 
         document.Blocks.Add(summaryTable);
 
@@ -133,19 +133,5 @@ public static class InvoiceDocumentBuilder
         }
 
         return document;
-    }
-
-    private static TableRow BuildLabelValueRow(string label, string value)
-    {
-        var row = new TableRow();
-        row.Cells.Add(new TableCell(new Paragraph(new Run(label)))
-        {
-            Padding = new Thickness(0, 3, 0, 3)
-        });
-        row.Cells.Add(new TableCell(new Paragraph(new Run(value)) { TextAlignment = TextAlignment.Right })
-        {
-            Padding = new Thickness(0, 3, 0, 3)
-        });
-        return row;
     }
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,11 +11,17 @@ namespace AtlasERP.Presentation.WPF.Printing;
 
 /// <summary>
 /// Shared branding for printed documents (contracts, payslips, invoices, expense
-/// reports): the company's accent color (from Settings) and a logo+name letterhead.
+/// reports): the company's accent color (from Settings), a logo+name letterhead with a
+/// colored rule beneath it, and consistent label/value row styling.
 /// </summary>
 public static class DocumentBrandingHelper
 {
     private static readonly Brush DefaultAccent = Brushes.Black;
+    private static readonly Brush MutedLabelBrush = new SolidColorBrush(Color.FromRgb(0x6B, 0x72, 0x80));
+
+    /// <summary>Serif for titles/headings — pairs with the Segoe UI body text for a more
+    /// premium letterhead feel than an all-sans-serif document.</summary>
+    public static readonly FontFamily HeadingFontFamily = new("Georgia");
 
     public static Brush GetAccentBrush(Company company)
     {
@@ -34,12 +41,15 @@ public static class DocumentBrandingHelper
         }
     }
 
-    /// <summary>A logo (if one's been uploaded) beside the legal name, in the brand color — goes at the top of every document.</summary>
+    /// <summary>Logo (if one's been uploaded) beside the legal name, with a colored rule
+    /// underneath — goes at the top of every document.</summary>
     public static Block BuildLetterhead(Company company)
     {
-        var grid = new Grid { Margin = new Thickness(0, 0, 0, 20) };
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        var accent = GetAccentBrush(company);
+
+        var headerGrid = new Grid();
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
         if (!string.IsNullOrWhiteSpace(company.LogoPath) && File.Exists(company.LogoPath))
         {
@@ -55,12 +65,12 @@ public static class DocumentBrandingHelper
                 var image = new Image
                 {
                     Source = bitmap,
-                    Height = 44,
-                    Margin = new Thickness(0, 0, 12, 0),
+                    Height = 48,
+                    Margin = new Thickness(0, 0, 14, 0),
                     HorizontalAlignment = HorizontalAlignment.Left
                 };
                 Grid.SetColumn(image, 0);
-                grid.Children.Add(image);
+                headerGrid.Children.Add(image);
             }
             catch
             {
@@ -71,14 +81,51 @@ public static class DocumentBrandingHelper
         var nameBlock = new TextBlock
         {
             Text = company.LegalName,
-            FontSize = 16,
+            FontFamily = HeadingFontFamily,
+            FontSize = 19,
             FontWeight = FontWeights.Bold,
             VerticalAlignment = VerticalAlignment.Center,
-            Foreground = GetAccentBrush(company)
+            Foreground = Brushes.Black
         };
         Grid.SetColumn(nameBlock, 1);
-        grid.Children.Add(nameBlock);
+        headerGrid.Children.Add(nameBlock);
 
-        return new BlockUIContainer(grid);
+        var rule = new Border
+        {
+            Height = 3,
+            Background = accent,
+            Margin = new Thickness(0, 14, 0, 24)
+        };
+
+        var stack = new StackPanel();
+        stack.Children.Add(headerGrid);
+        stack.Children.Add(rule);
+
+        return new BlockUIContainer(stack);
+    }
+
+    /// <summary>A small-caps-style muted label over a plain value — the row styling used
+    /// throughout every printed document for consistency.</summary>
+    public static TableRow BuildLabelValueRow(string label, string value, Brush? valueForeground = null, bool rightAlignValue = false)
+    {
+        var row = new TableRow();
+        row.Cells.Add(new TableCell(new Paragraph(new Run(label.ToUpper(CultureInfo.CurrentCulture)))
+        {
+            FontSize = 10,
+            FontWeight = FontWeights.SemiBold,
+            Foreground = MutedLabelBrush
+        })
+        {
+            Padding = new Thickness(0, 5, 0, 5)
+        });
+        row.Cells.Add(new TableCell(new Paragraph(new Run(value))
+        {
+            Foreground = valueForeground ?? Brushes.Black,
+            TextAlignment = rightAlignValue ? TextAlignment.Right : TextAlignment.Left
+        })
+        {
+            Padding = new Thickness(0, 5, 0, 5)
+        });
+        return row;
     }
 }

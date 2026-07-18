@@ -46,11 +46,16 @@ public static class PayslipDocumentBuilder
 
         section.Blocks.Add(DocumentBrandingHelper.BuildLetterhead(company));
 
-        section.Blocks.Add(new Paragraph(new Run($"PAYSLIP — {periodLabel}"))
+        section.Blocks.Add(new Paragraph(new Run("Payslip"))
         {
-            FontSize = 18,
+            FontFamily = DocumentBrandingHelper.HeadingFontFamily,
+            FontSize = 20,
             FontWeight = FontWeights.Bold,
-            Foreground = accent,
+            Margin = new Thickness(0, 0, 0, 2)
+        });
+        section.Blocks.Add(new Paragraph(new Run(periodLabel))
+        {
+            Foreground = Brushes.Gray,
             Margin = new Thickness(0, 0, 0, 24)
         });
 
@@ -60,8 +65,8 @@ public static class PayslipDocumentBuilder
         var detailsRowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(detailsRowGroup);
 
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})"));
-        detailsRowGroup.Rows.Add(BuildLabelValueRow("Job title", employee.JobTitle));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Employee", $"{employee.FirstName} {employee.LastName} ({employee.EmployeeCode})"));
+        detailsRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Job title", employee.JobTitle));
         section.Blocks.Add(detailsTable);
 
         if (payslip.LineItems.Count > 0)
@@ -98,9 +103,9 @@ public static class PayslipDocumentBuilder
         var summaryRowGroup = new TableRowGroup();
         summaryTable.RowGroups.Add(summaryRowGroup);
 
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Gross pay", payslip.GrossPay.ToString("C")));
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Total bonuses", $"+{payslip.TotalBonuses:C}"));
-        summaryRowGroup.Rows.Add(BuildLabelValueRow("Total deductions", $"-{payslip.TotalDeductions:C}"));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Gross pay", payslip.GrossPay.ToString("C"), rightAlignValue: true));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Total bonuses", $"+{payslip.TotalBonuses:C}", rightAlignValue: true));
+        summaryRowGroup.Rows.Add(DocumentBrandingHelper.BuildLabelValueRow("Total deductions", $"-{payslip.TotalDeductions:C}", rightAlignValue: true));
 
         var netRow = new TableRow();
         netRow.Cells.Add(new TableCell(new Paragraph(new Run("NET PAY")) { FontSize = 15, FontWeight = FontWeights.Bold, Foreground = accent })
@@ -120,19 +125,5 @@ public static class PayslipDocumentBuilder
         section.Blocks.Add(summaryTable);
 
         return section;
-    }
-
-    private static TableRow BuildLabelValueRow(string label, string value)
-    {
-        var row = new TableRow();
-        row.Cells.Add(new TableCell(new Paragraph(new Run(label)) { FontWeight = FontWeights.SemiBold })
-        {
-            Padding = new Thickness(0, 4, 0, 4)
-        });
-        row.Cells.Add(new TableCell(new Paragraph(new Run(value)) { TextAlignment = TextAlignment.Right })
-        {
-            Padding = new Thickness(0, 4, 0, 4)
-        });
-        return row;
     }
 }

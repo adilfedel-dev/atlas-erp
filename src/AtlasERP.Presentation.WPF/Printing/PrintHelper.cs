@@ -20,14 +20,21 @@ public static class PrintHelper
             return false;
         }
 
-        document.PageHeight = printDialog.PrintableAreaHeight;
-        document.PageWidth = printDialog.PrintableAreaWidth;
-        document.PagePadding = new Thickness(50);
-        document.ColumnGap = 0;
-        document.ColumnWidth = printDialog.PrintableAreaWidth;
+        var pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
 
+        document.PageHeight = pageSize.Height;
+        document.PageWidth = pageSize.Width;
+        document.PagePadding = new Thickness(50);
+
+        // Setting FlowDocument.PageWidth/PageHeight alone isn't enough — the paginator used
+        // for the actual print pass caches its own PageSize, and if that's never set
+        // explicitly it measures Table star-columns against an effectively-zero width,
+        // which is what caused every value column to wrap one character per line.
         IDocumentPaginatorSource paginatorSource = document;
-        printDialog.PrintDocument(paginatorSource.DocumentPaginator, jobName);
+        var paginator = paginatorSource.DocumentPaginator;
+        paginator.PageSize = pageSize;
+
+        printDialog.PrintDocument(paginator, jobName);
         return true;
     }
 }
