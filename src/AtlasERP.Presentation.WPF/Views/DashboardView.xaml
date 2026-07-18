@@ -1,33 +1,97 @@
 <UserControl x:Class="AtlasERP.Presentation.WPF.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StackPanel Margin="28">
-        <TextBlock Text="{Binding WelcomeMessage}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,24" />
+    <UserControl.Resources>
+        <DataTemplate x:Key="BarTemplate">
+            <StackPanel Width="56" Margin="4,0" VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding Value, StringFormat=N0}"
+                           FontSize="10"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource Brush.Text.Secondary}"
+                           Margin="0,0,0,4" />
+                <Border Height="{Binding BarHeight}"
+                        Background="{DynamicResource Brush.Accent}"
+                        CornerRadius="4,4,0,0"
+                        VerticalAlignment="Bottom" />
+                <TextBlock Text="{Binding Label}"
+                           FontSize="11"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource Brush.Text.Secondary}"
+                           Margin="0,6,0,0" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
 
-        <StackPanel Orientation="Horizontal">
-            <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
-                <StackPanel>
-                    <TextBlock Text="TOTAL EMPLOYEES" Style="{StaticResource Text.Caption}" />
-                    <TextBlock Text="{Binding TotalEmployeeCount}" FontSize="34" FontWeight="Bold"
-                               Foreground="{DynamicResource Brush.Text.Primary}" Margin="0,6,0,0" />
-                </StackPanel>
-            </Border>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+            <TextBlock Text="{Binding WelcomeMessage}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,24" />
 
-            <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
-                <StackPanel>
-                    <TextBlock Text="ACTIVE" Style="{StaticResource Text.Caption}" />
-                    <TextBlock Text="{Binding ActiveEmployeeCount}" FontSize="34" FontWeight="Bold"
-                               Foreground="{DynamicResource Brush.Success}" Margin="0,6,0,0" />
-                </StackPanel>
-            </Border>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL EMPLOYEES" Style="{StaticResource Text.Caption}" />
+                        <TextBlock Text="{Binding TotalEmployeeCount}" FontSize="34" FontWeight="Bold"
+                                   Foreground="{DynamicResource Brush.Text.Primary}" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
 
-            <Border Style="{StaticResource Panel.Card}" Width="220">
-                <StackPanel>
-                    <TextBlock Text="ON LEAVE" Style="{StaticResource Text.Caption}" />
-                    <TextBlock Text="{Binding OnLeaveEmployeeCount}" FontSize="34" FontWeight="Bold"
-                               Foreground="{DynamicResource Brush.Warning}" Margin="0,6,0,0" />
-                </StackPanel>
-            </Border>
+                <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
+                    <StackPanel>
+                        <TextBlock Text="ACTIVE" Style="{StaticResource Text.Caption}" />
+                        <TextBlock Text="{Binding ActiveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                                   Foreground="{DynamicResource Brush.Success}" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Panel.Card}" Width="220">
+                    <StackPanel>
+                        <TextBlock Text="ON LEAVE" Style="{StaticResource Text.Caption}" />
+                        <TextBlock Text="{Binding OnLeaveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                                   Foreground="{DynamicResource Brush.Warning}" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <WrapPanel>
+                <Border Style="{StaticResource Panel.Card}" Width="360" Margin="0,0,16,16">
+                    <StackPanel>
+                        <TextBlock Text="Headcount (last 6 months)" Style="{StaticResource Text.Heading2}" Margin="0,0,0,16" />
+                        <ItemsControl ItemsSource="{Binding HeadcountTrend}" ItemTemplate="{StaticResource BarTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="180" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Panel.Card}" Width="360" Margin="0,0,16,16">
+                    <StackPanel>
+                        <TextBlock Text="Payroll cost (last 6 months)" Style="{StaticResource Text.Heading2}" Margin="0,0,0,16" />
+                        <ItemsControl ItemsSource="{Binding PayrollCostTrend}" ItemTemplate="{StaticResource BarTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="180" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Panel.Card}" Width="360" Margin="0,0,16,16">
+                    <StackPanel>
+                        <TextBlock Text="Invoiced (last 6 months)" Style="{StaticResource Text.Heading2}" Margin="0,0,0,16" />
+                        <ItemsControl ItemsSource="{Binding InvoicedTrend}" ItemTemplate="{StaticResource BarTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="180" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </WrapPanel>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>
