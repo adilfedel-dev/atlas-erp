@@ -52,4 +52,12 @@
         <GradientStop Color="#FCFBF8" Offset="1" />
     </LinearGradientBrush>
 
+    <!-- A slightly lighter tone on the top-left edge, as if catching light — the "glass edge"
+         approximation used on every card since true backdrop blur isn't safely available in WPF. -->
+    <LinearGradientBrush x:Key="Brush.Card.EdgeHighlight" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#F2EFE6" Offset="0" />
+        <GradientStop Color="#E5E2DA" Offset="0.4" />
+        <GradientStop Color="#E5E2DA" Offset="1" />
+    </LinearGradientBrush>
+
 </ResourceDictionary>

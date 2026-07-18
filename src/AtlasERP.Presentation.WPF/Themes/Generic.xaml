@@ -39,7 +39,7 @@
 
     <Style x:Key="Panel.Card" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Brush.Card.Sheen}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Card.EdgeHighlight}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="12" />
         <Setter Property="Padding" Value="20" />
@@ -116,7 +116,11 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ButtonBorder"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="8">
+                            CornerRadius="8"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="ButtonScale" ScaleX="1" ScaleY="1" />
+                        </Border.RenderTransform>
                         <Border.Effect>
                             <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
                         </Border.Effect>
@@ -127,7 +131,10 @@
                     <ControlTemplate.Triggers>
                         <!-- DropShadowEffect isn't a FrameworkElement, so a Trigger can't reach into it
                              to tweak individual properties via TargetName — replace the whole Effect
-                             object instead, which is the standard WPF workaround. -->
+                             object instead, which is the standard WPF workaround. Animating the
+                             ScaleTransform's own properties (a Freezable, not a FrameworkElement) works
+                             fine via Storyboard.TargetName inside EnterActions/ExitActions, which is a
+                             different, storyboard-based targeting mechanism than a plain Setter. -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Effect">
                                 <Setter.Value>
@@ -136,12 +143,28 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.85" />
+                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.9" />
                             <Setter TargetName="ButtonBorder" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect Color="{DynamicResource Color.ShadowSoft}" Direction="270" ShadowDepth="1" BlurRadius="6" Opacity="0.4" />
                                 </Setter.Value>
                             </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="0.96" Duration="0:0:0.08" />
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="0.96" Duration="0:0:0.08" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.12" />
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.5" />
@@ -341,6 +364,39 @@
     <Style TargetType="{x:Type Window}">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="Opacity" Value="0" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.18">
+                            <DoubleAnimation.EasingFunction>
+                                <QuadraticEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Every page view fades in on navigation, so switching sections feels handcrafted
+         rather than an instant content swap. -->
+    <Style TargetType="{x:Type UserControl}">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.22">
+                            <DoubleAnimation.EasingFunction>
+                                <QuadraticEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
