@@ -26,6 +26,15 @@ public partial class DashboardViewModel : ObservableObject
     private string _welcomeMessage = string.Empty;
 
     [ObservableProperty]
+    private string _companyDisplayName = string.Empty;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasLogo))]
+    private string? _logoPath;
+
+    public bool HasLogo => !string.IsNullOrWhiteSpace(LogoPath);
+
+    [ObservableProperty]
     private bool _isBusy;
 
     [ObservableProperty]
@@ -56,8 +65,10 @@ public partial class DashboardViewModel : ObservableObject
         _payrollService = payrollService;
         _invoiceService = invoiceService;
 
-        var companyName = companyContextService.CurrentCompany?.Name ?? "your company";
-        WelcomeMessage = $"Welcome back — here's what's happening at {companyName}";
+        var company = companyContextService.CurrentCompany;
+        CompanyDisplayName = company?.Name ?? "your company";
+        LogoPath = company?.LogoPath;
+        WelcomeMessage = $"Welcome back — here's what's happening at {CompanyDisplayName}";
 
         _ = LoadStatsAsync();
     }

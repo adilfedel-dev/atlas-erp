@@ -61,7 +61,7 @@ public static class PayslipDocumentBuilder
 
         var detailsTable = new Table { CellSpacing = 0 };
         detailsTable.Columns.Add(new TableColumn { Width = new GridLength(170) });
-        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(450) });
+        detailsTable.Columns.Add(new TableColumn { Width = new GridLength(546) });
         var detailsRowGroup = new TableRowGroup();
         detailsTable.RowGroups.Add(detailsRowGroup);
 
@@ -78,7 +78,7 @@ public static class PayslipDocumentBuilder
             });
 
             var lineItemsTable = new Table { CellSpacing = 0 };
-            lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(300) });
+            lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(496) });
             lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(100) });
             lineItemsTable.Columns.Add(new TableColumn { Width = new GridLength(120) });
             var lineItemsRowGroup = new TableRowGroup();
@@ -98,7 +98,7 @@ public static class PayslipDocumentBuilder
         }
 
         var summaryTable = new Table { CellSpacing = 0, Margin = new Thickness(0, 24, 0, 0) };
-        summaryTable.Columns.Add(new TableColumn { Width = new GridLength(370) });
+        summaryTable.Columns.Add(new TableColumn { Width = new GridLength(566) });
         summaryTable.Columns.Add(new TableColumn { Width = new GridLength(150) });
         var summaryRowGroup = new TableRowGroup();
         summaryTable.RowGroups.Add(summaryRowGroup);

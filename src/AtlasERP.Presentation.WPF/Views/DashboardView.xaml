@@ -10,7 +10,7 @@
                            Foreground="{DynamicResource Brush.Text.Secondary}"
                            Margin="0,0,0,4" />
                 <Border Height="{Binding BarHeight}"
-                        Background="{DynamicResource Brush.Accent}"
+                        Background="{DynamicResource Brush.Accent.Gradient}"
                         CornerRadius="4,4,0,0"
                         VerticalAlignment="Bottom" />
                 <TextBlock Text="{Binding Label}"
@@ -24,7 +24,41 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="28">
-            <TextBlock Text="{Binding WelcomeMessage}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,24" />
+
+            <!-- Hero -->
+            <Border Style="{StaticResource Panel.Hero}" Margin="0,0,0,24">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="76" Height="76"
+                            CornerRadius="14"
+                            Background="#14FFFFFF"
+                            BorderBrush="{DynamicResource Brush.Gold}"
+                            BorderThickness="1"
+                            Margin="0,0,24,0"
+                            Visibility="{Binding HasLogo, Converter={StaticResource BoolToVisibleConverter}}">
+                        <Image Source="{Binding LogoPath, Converter={StaticResource PathToImageSourceConverter}}"
+                               Stretch="Uniform"
+                               Margin="12" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding CompanyDisplayName}"
+                                   FontFamily="Georgia"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   Foreground="White" />
+                        <TextBlock Text="{Binding WelcomeMessage}"
+                                   FontSize="13"
+                                   Foreground="#B8C0D4"
+                                   Margin="0,6,0,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
                 <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
