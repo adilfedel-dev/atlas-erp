@@ -89,6 +89,7 @@ public partial class App : Application
         services.AddSingleton<CompanyMigrationRunner>();
         services.AddSingleton<MasterDbSeeder>();
         services.AddSingleton<IEmployeeService, EmployeeService>();
+        services.AddSingleton<IContractService, ContractService>();
 
         services.AddTransient<LoginViewModel>();
         services.AddTransient<LoginView>();
@@ -99,6 +100,9 @@ public partial class App : Application
         services.AddTransient<EmployeeListViewModel>();
         services.AddTransient<EmployeeEditViewModel>();
         services.AddTransient<EmployeeEditView>();
+        services.AddTransient<ContractListViewModel>();
+        services.AddTransient<ContractEditViewModel>();
+        services.AddTransient<ContractEditView>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
     }

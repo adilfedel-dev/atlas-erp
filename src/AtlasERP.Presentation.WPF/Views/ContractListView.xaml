@@ -1,0 +1,58 @@
+<UserControl x:Class="AtlasERP.Presentation.WPF.Views.ContractListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Contracts" Style="{StaticResource Text.Heading1}" />
+                <TextBlock Text="Employment contracts, generated and printable" Style="{StaticResource Text.Subtitle}" Margin="0,2,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Content="Refresh" Command="{Binding LoadCommand}" Margin="0,0,8,0" />
+                <Button Content="Print" Command="{Binding PrintContractCommand}" Margin="0,0,8,0" />
+                <Button Content="Edit" Command="{Binding EditContractCommand}" Margin="0,0,8,0" />
+                <Button Content="Delete" Command="{Binding DeleteContractCommand}" Margin="0,0,8,0" />
+                <Button Content="+ New contract" Style="{StaticResource Button.Primary}" Command="{Binding AddContractCommand}" />
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Grid.Row="1"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource Brush.Error}"
+                   Margin="0,0,0,8"
+                   Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+
+        <Border Grid.Row="2" Style="{StaticResource Panel.Card}" Padding="0">
+            <DataGrid ItemsSource="{Binding Contracts}"
+                      SelectedItem="{Binding SelectedContract}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      SelectionMode="Single"
+                      GridLinesVisibility="Horizontal"
+                      BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Employee" Width="200">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Employee.FirstName" />
+                                <Binding Path="Employee.LastName" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Type" Binding="{Binding ContractType}" Width="110" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100" />
+                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat=d}" Width="110" />
+                    <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="110" />
+                    <DataGridTextColumn Header="Base salary" Binding="{Binding BaseSalaryAtSigning, StringFormat=C}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -17,6 +17,7 @@ public class CompanyDbContext : DbContext
 
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<Department> Departments => Set<Department>();
+    public DbSet<EmployeeContract> EmployeeContracts => Set<EmployeeContract>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,0 +1,63 @@
+<Window x:Class="AtlasERP.Presentation.WPF.Views.ContractEditView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title}"
+        Width="520" Height="620"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource Brush.Background.Window}">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Title}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,16" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Employee *" Style="{StaticResource Text.Label}" />
+                <ComboBox ItemsSource="{Binding EmployeeOptions}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedItem="{Binding SelectedEmployee}"
+                          Margin="0,0,0,12" />
+
+                <TextBlock Text="Contract type" Style="{StaticResource Text.Label}" />
+                <ComboBox ItemsSource="{Binding ContractTypeOptions}" SelectedItem="{Binding ContractType}" Margin="0,0,0,12" />
+
+                <TextBlock Text="Status" Style="{StaticResource Text.Label}" />
+                <ComboBox ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Status}" Margin="0,0,0,12" />
+
+                <TextBlock Text="Start date" Style="{StaticResource Text.Label}" />
+                <DatePicker SelectedDate="{Binding StartDate}" Margin="0,0,0,12" />
+
+                <TextBlock Text="End date (leave blank if open-ended)" Style="{StaticResource Text.Label}" />
+                <DatePicker SelectedDate="{Binding EndDate}" Margin="0,0,0,12" />
+
+                <TextBlock Text="Signed date" Style="{StaticResource Text.Label}" />
+                <DatePicker SelectedDate="{Binding SignedDate}" Margin="0,0,0,12" />
+
+                <TextBlock Text="Base salary at signing" Style="{StaticResource Text.Label}" />
+                <TextBox Text="{Binding BaseSalaryAtSigning, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+
+                <TextBlock Text="Additional terms" Style="{StaticResource Text.Label}" />
+                <TextBox Text="{Binding Terms, UpdateSourceTrigger=PropertyChanged}"
+                         AcceptsReturn="True" TextWrapping="Wrap"
+                         Height="100" Margin="0,0,0,12" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="2"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource Brush.Error}"
+                   TextWrapping="Wrap"
+                   Margin="0,8,0,8"
+                   Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,0,8,0" />
+            <Button Content="Save" Style="{StaticResource Button.Primary}" Command="{Binding SaveCommand}" IsDefault="True" />
+        </StackPanel>
+    </Grid>
+</Window>
