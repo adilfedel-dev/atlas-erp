@@ -132,6 +132,8 @@ public static class InvoiceDocumentBuilder
             document.Blocks.Add(new Paragraph(new Run(invoice.Notes)));
         }
 
+        document.Blocks.Add(DocumentBrandingHelper.BuildFooter(company));
+
         return document;
     }
 }

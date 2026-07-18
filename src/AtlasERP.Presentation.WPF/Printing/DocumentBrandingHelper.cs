@@ -104,6 +104,47 @@ public static class DocumentBrandingHelper
         return new BlockUIContainer(stack);
     }
 
+    /// <summary>A quiet closing rule + company name/generated-date line — goes at the
+    /// bottom of every document so the whole family reads as one consistent product.</summary>
+    public static Block BuildFooter(Company company)
+    {
+        var stack = new StackPanel { Margin = new Thickness(0, 40, 0, 0) };
+
+        stack.Children.Add(new Border
+        {
+            Height = 1,
+            Background = new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)),
+            Margin = new Thickness(0, 0, 0, 10)
+        });
+
+        var footerGrid = new Grid();
+        footerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        footerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+        var companyText = new TextBlock
+        {
+            Text = company.LegalName,
+            FontSize = 9,
+            Foreground = Brushes.Gray
+        };
+        Grid.SetColumn(companyText, 0);
+        footerGrid.Children.Add(companyText);
+
+        var dateText = new TextBlock
+        {
+            Text = $"Generated {DateTime.Now:d MMM yyyy}",
+            FontSize = 9,
+            Foreground = Brushes.Gray,
+            HorizontalAlignment = HorizontalAlignment.Right
+        };
+        Grid.SetColumn(dateText, 1);
+        footerGrid.Children.Add(dateText);
+
+        stack.Children.Add(footerGrid);
+
+        return new BlockUIContainer(stack);
+    }
+
     /// <summary>A small-caps-style muted label over a plain value — the row styling used
     /// throughout every printed document for consistency.</summary>
     public static TableRow BuildLabelValueRow(string label, string value, Brush? valueForeground = null, bool rightAlignValue = false)

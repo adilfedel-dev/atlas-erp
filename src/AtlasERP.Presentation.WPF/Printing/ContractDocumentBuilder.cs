@@ -81,6 +81,7 @@ public static class ContractDocumentBuilder
         signatureRowGroup.Rows.Add(signatureRow);
 
         document.Blocks.Add(signatureTable);
+        document.Blocks.Add(DocumentBrandingHelper.BuildFooter(company));
 
         return document;
     }

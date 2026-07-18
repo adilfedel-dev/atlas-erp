@@ -117,6 +117,7 @@ public static class TravelExpenseReportDocumentBuilder
         signatureRowGroup.Rows.Add(signatureRow);
 
         document.Blocks.Add(signatureTable);
+        document.Blocks.Add(DocumentBrandingHelper.BuildFooter(company));
 
         return document;
     }

@@ -123,6 +123,7 @@ public static class PayslipDocumentBuilder
         summaryRowGroup.Rows.Add(netRow);
 
         section.Blocks.Add(summaryTable);
+        section.Blocks.Add(DocumentBrandingHelper.BuildFooter(company));
 
         return section;
     }
