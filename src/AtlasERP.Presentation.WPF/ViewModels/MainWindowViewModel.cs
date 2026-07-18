@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AtlasERP.Presentation.WPF.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject, IDisposable
 {
     private readonly ICompanyContextService _companyContextService;
     private readonly IServiceProvider _serviceProvider;
@@ -150,5 +150,15 @@ public partial class MainWindowViewModel : ObservableObject
     private void ToggleTheme()
     {
         ThemeManager.ToggleTheme();
+    }
+
+    /// <summary>
+    /// Unsubscribes from the (singleton) company context service's event. Needed now that
+    /// this ViewModel is created fresh per login rather than once for the app's lifetime —
+    /// without this, every switched-company cycle would leave a stale subscriber behind.
+    /// </summary>
+    public void Dispose()
+    {
+        _companyContextService.CompanyChanged -= OnCompanyChanged;
     }
 }

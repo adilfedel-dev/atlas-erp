@@ -129,8 +129,13 @@ public partial class App : Application
         services.AddTransient<TravelExpenseDetailView>();
         services.AddTransient<SignatureCaptureViewModel>();
         services.AddTransient<SignatureCaptureView>();
-        services.AddSingleton<MainWindowViewModel>();
-        services.AddSingleton<MainWindow>();
+        // Transient, not singleton: once a Window is Close()'d, WPF will not let it be
+        // reopened. MainWindow gets closed every time the user logs out (or switches
+        // companies, which goes through logout), so reusing a singleton instance on the
+        // next login threw an unhandled exception on Show() — this was the "app lags then
+        // closes when opening a different company" crash.
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<MainWindow>();
     }
 
     private static async Task RunStartupMigrationsAndSeedAsync(IServiceProvider services)
