@@ -2,41 +2,34 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AtlasERP — Sign in"
-        Width="420" Height="480"
+        Width="440" Height="520"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="{DynamicResource Brush.Background.Window}">
     <Grid>
-        <Border Width="340"
-                Padding="32"
+        <Border Width="360"
+                Style="{StaticResource Panel.Card}"
+                Padding="36"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="{DynamicResource Brush.Background.Surface}"
-                BorderBrush="{DynamicResource Brush.Border}"
-                BorderThickness="1"
-                CornerRadius="8">
+                VerticalAlignment="Center">
             <StackPanel>
-                <TextBlock Text="AtlasERP"
-                           FontSize="26"
-                           FontWeight="Bold"
-                           Foreground="{DynamicResource Brush.Text.Primary}"
-                           HorizontalAlignment="Center" />
-                <TextBlock Text="Sign in to continue"
-                           FontSize="13"
-                           Margin="0,4,0,24"
-                           Foreground="{DynamicResource Brush.Text.Secondary}"
+                <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource Brush.Accent}"
+                        HorizontalAlignment="Center" Margin="0,0,0,16">
+                    <TextBlock Text="A" FontSize="22" FontWeight="Bold" Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+
+                <TextBlock Text="Welcome back" Style="{StaticResource Text.Heading1}" HorizontalAlignment="Center" />
+                <TextBlock Text="Sign in to AtlasERP to continue"
+                           Style="{StaticResource Text.Subtitle}"
+                           Margin="0,4,0,28"
                            HorizontalAlignment="Center" />
 
-                <TextBlock Text="Username" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                         Padding="8"
-                         Margin="0,0,0,16" />
+                <TextBlock Text="Username" Style="{StaticResource Text.Label}" />
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16" />
 
-                <TextBlock Text="Password" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                <PasswordBox x:Name="PasswordInput"
-                             Padding="8"
-                             Margin="0,0,0,8"
-                             PasswordChanged="PasswordInput_PasswordChanged" />
+                <TextBlock Text="Password" Style="{StaticResource Text.Label}" />
+                <PasswordBox x:Name="PasswordInput" Margin="0,0,0,8" PasswordChanged="PasswordInput_PasswordChanged" />
 
                 <TextBlock Text="{Binding ErrorMessage}"
                            Foreground="{DynamicResource Brush.Error}"
@@ -45,18 +38,16 @@
                            Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
 
                 <Button Content="Sign in"
+                        Style="{StaticResource Button.Primary}"
                         Command="{Binding LoginCommand}"
                         IsDefault="True"
-                        Padding="8"
-                        Height="38"
-                        Background="{DynamicResource Brush.Accent}"
-                        Foreground="White"
-                        BorderThickness="0" />
+                        Margin="0,8,0,0"
+                        HorizontalAlignment="Stretch" />
 
                 <TextBlock Text="Signing in..."
-                           Margin="0,10,0,0"
+                           Style="{StaticResource Text.Caption}"
+                           Margin="0,12,0,0"
                            HorizontalAlignment="Center"
-                           Foreground="{DynamicResource Brush.Text.Secondary}"
                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibleConverter}}" />
             </StackPanel>
         </Border>

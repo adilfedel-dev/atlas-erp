@@ -1,13 +1,33 @@
 <UserControl x:Class="AtlasERP.Presentation.WPF.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <TextBlock Text="{Binding WelcomeMessage}"
-                   FontSize="24"
-                   FontWeight="SemiBold"
-                   Foreground="{DynamicResource Brush.Text.Primary}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="24" />
-    </Grid>
+    <StackPanel Margin="28">
+        <TextBlock Text="{Binding WelcomeMessage}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,24" />
+
+        <StackPanel Orientation="Horizontal">
+            <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
+                <StackPanel>
+                    <TextBlock Text="TOTAL EMPLOYEES" Style="{StaticResource Text.Caption}" />
+                    <TextBlock Text="{Binding TotalEmployeeCount}" FontSize="34" FontWeight="Bold"
+                               Foreground="{DynamicResource Brush.Text.Primary}" Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Panel.Card}" Width="220" Margin="0,0,16,0">
+                <StackPanel>
+                    <TextBlock Text="ACTIVE" Style="{StaticResource Text.Caption}" />
+                    <TextBlock Text="{Binding ActiveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                               Foreground="{DynamicResource Brush.Success}" Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Panel.Card}" Width="220">
+                <StackPanel>
+                    <TextBlock Text="ON LEAVE" Style="{StaticResource Text.Caption}" />
+                    <TextBlock Text="{Binding OnLeaveEmployeeCount}" FontSize="34" FontWeight="Bold"
+                               Foreground="{DynamicResource Brush.Warning}" Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

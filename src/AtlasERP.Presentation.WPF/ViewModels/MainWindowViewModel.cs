@@ -22,6 +22,12 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private object? _currentPage;
 
+    [ObservableProperty]
+    private bool _isDashboardActive = true;
+
+    [ObservableProperty]
+    private bool _isEmployeesActive;
+
     public MainWindowViewModel(ICompanyContextService companyContextService, IServiceProvider serviceProvider, IAppNavigation appNavigation)
     {
         _companyContextService = companyContextService;
@@ -44,6 +50,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         CurrentPage = _serviceProvider.GetRequiredService<DashboardViewModel>();
         CurrentPageTitle = "Dashboard";
+        SetActiveNav(dashboard: true);
     }
 
     [RelayCommand]
@@ -51,6 +58,13 @@ public partial class MainWindowViewModel : ObservableObject
     {
         CurrentPage = _serviceProvider.GetRequiredService<EmployeeListViewModel>();
         CurrentPageTitle = "Employees";
+        SetActiveNav(employees: true);
+    }
+
+    private void SetActiveNav(bool dashboard = false, bool employees = false)
+    {
+        IsDashboardActive = dashboard;
+        IsEmployeesActive = employees;
     }
 
     [RelayCommand]

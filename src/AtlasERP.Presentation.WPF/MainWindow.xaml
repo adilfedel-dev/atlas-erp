@@ -4,8 +4,8 @@
         xmlns:vm="clr-namespace:AtlasERP.Presentation.WPF.ViewModels"
         xmlns:views="clr-namespace:AtlasERP.Presentation.WPF.Views"
         Title="AtlasERP"
-        Width="1200" Height="760"
-        MinWidth="900" MinHeight="600"
+        Width="1280" Height="800"
+        MinWidth="960" MinHeight="640"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Brush.Background.Window}">
 
@@ -19,65 +19,70 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="56" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="240" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Header -->
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                Background="{DynamicResource Brush.Background.Surface}"
-                BorderBrush="{DynamicResource Brush.Border}"
-                BorderThickness="0,0,0,1">
-            <Grid Margin="16,0">
-                <TextBlock Text="AtlasERP"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           Foreground="{DynamicResource Brush.Text.Primary}"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding CurrentCompanyName}"
-                               Foreground="{DynamicResource Brush.Text.Secondary}"
-                               VerticalAlignment="Center"
-                               Margin="0,0,16,0" />
-                    <Button Content="Toggle theme" Command="{Binding ToggleThemeCommand}" Padding="8,4" Margin="0,0,8,0" />
-                    <Button Content="Sign out" Command="{Binding LogoutCommand}" Padding="8,4" />
-                </StackPanel>
-            </Grid>
-        </Border>
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{DynamicResource Brush.Background.Sidebar}">
+            <DockPanel LastChildFill="True" Margin="0,0,0,16">
 
-        <!-- Left nav -->
-        <Border Grid.Row="1" Grid.Column="0"
-                Background="{DynamicResource Brush.Background.Surface}"
-                BorderBrush="{DynamicResource Brush.Border}"
-                BorderThickness="0,0,1,0">
-            <StackPanel Margin="8">
-                <Button Content="Dashboard"
-                        Command="{Binding NavigateToDashboardCommand}"
-                        HorizontalContentAlignment="Left"
-                        Padding="12,10"
-                        Margin="0,0,0,4"
-                        Background="Transparent"
-                        BorderThickness="0" />
-                <Button Content="Employees"
-                        Command="{Binding NavigateToEmployeesCommand}"
-                        HorizontalContentAlignment="Left"
-                        Padding="12,10"
-                        Margin="0,0,0,4"
-                        Background="Transparent"
-                        BorderThickness="0" />
-                <!-- Future modules (Payroll, Contracts, Invoices, ...) attach nav buttons here -->
-            </StackPanel>
+                <!-- Brand -->
+                <StackPanel DockPanel.Dock="Top" Margin="20,24,20,28">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="28" Height="28" CornerRadius="7" Background="{DynamicResource Brush.Accent}" Margin="0,0,10,0">
+                            <TextBlock Text="A" FontSize="15" FontWeight="Bold" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="AtlasERP" FontSize="17" FontWeight="Bold"
+                                   Foreground="{DynamicResource Brush.Text.OnDark}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <TextBlock Text="{Binding CurrentCompanyName}"
+                               FontSize="12"
+                               Margin="38,4,0,0"
+                               Foreground="{DynamicResource Brush.Text.OnDarkMuted}" />
+                </StackPanel>
+
+                <!-- Bottom actions -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="6,0">
+                    <ToggleButton Style="{StaticResource Button.NavItem}" Command="{Binding ToggleThemeCommand}" Content="🌓  Toggle theme" />
+                    <ToggleButton Style="{StaticResource Button.NavItem}" Command="{Binding LogoutCommand}" Content="↩  Sign out" />
+                </StackPanel>
+
+                <!-- Nav items -->
+                <StackPanel DockPanel.Dock="Top" Margin="6,0">
+                    <ToggleButton Style="{StaticResource Button.NavItem}"
+                                  Command="{Binding NavigateToDashboardCommand}"
+                                  IsChecked="{Binding IsDashboardActive, Mode=OneWay}"
+                                  Content="Dashboard" />
+                    <ToggleButton Style="{StaticResource Button.NavItem}"
+                                  Command="{Binding NavigateToEmployeesCommand}"
+                                  IsChecked="{Binding IsEmployeesActive, Mode=OneWay}"
+                                  Content="Employees" />
+                    <!-- Future modules (Payroll, Invoices, ...) attach nav items here -->
+                </StackPanel>
+            </DockPanel>
         </Border>
 
         <!-- Content -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="0">
-            <ContentControl Content="{Binding CurrentPage}" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="64" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    Background="{DynamicResource Brush.Background.Window}"
+                    BorderBrush="{DynamicResource Brush.Border}"
+                    BorderThickness="0,0,0,1">
+                <TextBlock Text="{Binding CurrentPageTitle}"
+                           Style="{StaticResource Text.Heading2}"
+                           VerticalAlignment="Center"
+                           Margin="28,0" />
+            </Border>
+
+            <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" Margin="0" />
         </Grid>
     </Grid>
 </Window>

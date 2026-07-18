@@ -13,10 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding Title}"
-                   FontSize="20" FontWeight="Bold"
-                   Foreground="{DynamicResource Brush.Text.Primary}"
-                   Margin="0,0,0,16" />
+        <TextBlock Grid.Row="0" Text="{Binding Title}" Style="{StaticResource Text.Heading1}" Margin="0,0,0,16" />
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel>
@@ -28,62 +25,62 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Employee code *" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding EmployeeCode, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Employee code *" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding EmployeeCode, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="First name *" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="First name *" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Last name *" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Last name *" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Gender" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Gender" Style="{StaticResource Text.Label}" />
+                        <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Date of birth" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <DatePicker SelectedDate="{Binding DateOfBirth}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Date of birth" Style="{StaticResource Text.Label}" />
+                        <DatePicker SelectedDate="{Binding DateOfBirth}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="National ID" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding NationalId, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="National ID" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding NationalId, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Personal email" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding PersonalEmail, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Personal email" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding PersonalEmail, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Job title *" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Job title *" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Hire date" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <DatePicker SelectedDate="{Binding HireDate}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Hire date" Style="{StaticResource Text.Label}" />
+                        <DatePicker SelectedDate="{Binding HireDate}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Employment status" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <ComboBox ItemsSource="{Binding EmploymentStatusOptions}" SelectedItem="{Binding EmploymentStatus}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Employment status" Style="{StaticResource Text.Label}" />
+                        <ComboBox ItemsSource="{Binding EmploymentStatusOptions}" SelectedItem="{Binding EmploymentStatus}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Base salary" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding BaseSalary, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Base salary" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding BaseSalary, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Work email" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding WorkEmail, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Work email" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding WorkEmail, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Phone number" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Phone number" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                        <TextBlock Text="Bank name" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                        <TextBox Text="{Binding BankName, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                        <TextBlock Text="Bank name" Style="{StaticResource Text.Label}" />
+                        <TextBox Text="{Binding BankName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
                     </StackPanel>
                 </Grid>
 
-                <TextBlock Text="Address" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                <TextBlock Text="Address" Style="{StaticResource Text.Label}" />
+                <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                <TextBlock Text="Bank account number" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
-                <TextBox Text="{Binding BankAccountNumber, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,0,0,12" />
+                <TextBlock Text="Bank account number" Style="{StaticResource Text.Label}" />
+                <TextBox Text="{Binding BankAccountNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                <TextBlock Text="Notes" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,0,4" />
+                <TextBlock Text="Notes" Style="{StaticResource Text.Label}" />
                 <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"
                          AcceptsReturn="True" TextWrapping="Wrap"
-                         Height="60" Padding="6" Margin="0,0,0,12" />
+                         Height="60" Margin="0,0,0,12" />
             </StackPanel>
         </ScrollViewer>
 
@@ -95,14 +92,8 @@
                    Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancel" Command="{Binding CancelCommand}" Padding="14,8" Margin="0,0,8,0" />
-            <Button Content="Save"
-                    Command="{Binding SaveCommand}"
-                    IsDefault="True"
-                    Padding="14,8"
-                    Background="{DynamicResource Brush.Accent}"
-                    Foreground="White"
-                    BorderThickness="0" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,0,8,0" />
+            <Button Content="Save" Style="{StaticResource Button.Primary}" Command="{Binding SaveCommand}" IsDefault="True" />
         </StackPanel>
     </Grid>
 </Window>

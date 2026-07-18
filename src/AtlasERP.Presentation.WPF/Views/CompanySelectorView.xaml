@@ -2,31 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AtlasERP — Select company"
-        Width="420" Height="440"
+        Width="440" Height="460"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="{DynamicResource Brush.Background.Window}">
     <Grid>
-        <Border Width="340"
-                Padding="32"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="{DynamicResource Brush.Background.Surface}"
-                BorderBrush="{DynamicResource Brush.Border}"
-                BorderThickness="1"
-                CornerRadius="8">
+        <Border Width="360" Style="{StaticResource Panel.Card}" Padding="32"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
-                <TextBlock Text="Choose a company"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Foreground="{DynamicResource Brush.Text.Primary}"
-                           HorizontalAlignment="Center" />
+                <TextBlock Text="Choose a company" Style="{StaticResource Text.Heading1}" HorizontalAlignment="Center" />
                 <TextBlock Text="This account has access to more than one company"
-                           FontSize="12"
+                           Style="{StaticResource Text.Subtitle}"
                            Margin="0,4,0,20"
                            TextWrapping="Wrap"
                            TextAlignment="Center"
-                           Foreground="{DynamicResource Brush.Text.Secondary}"
                            HorizontalAlignment="Center" />
 
                 <ListBox ItemsSource="{Binding Companies}"
@@ -36,13 +25,10 @@
                          Margin="0,0,0,16" />
 
                 <Button Content="Continue"
+                        Style="{StaticResource Button.Primary}"
                         Command="{Binding ConfirmSelectionCommand}"
                         IsDefault="True"
-                        Padding="8"
-                        Height="38"
-                        Background="{DynamicResource Brush.Accent}"
-                        Foreground="White"
-                        BorderThickness="0" />
+                        HorizontalAlignment="Stretch" />
             </StackPanel>
         </Border>
     </Grid>
