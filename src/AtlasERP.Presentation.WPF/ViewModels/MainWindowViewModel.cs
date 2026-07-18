@@ -31,6 +31,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isContractsActive;
 
+    [ObservableProperty]
+    private bool _isPayrollActive;
+
     public MainWindowViewModel(ICompanyContextService companyContextService, IServiceProvider serviceProvider, IAppNavigation appNavigation)
     {
         _companyContextService = companyContextService;
@@ -72,11 +75,20 @@ public partial class MainWindowViewModel : ObservableObject
         SetActiveNav(contracts: true);
     }
 
-    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false)
+    [RelayCommand]
+    private void NavigateToPayroll()
+    {
+        CurrentPage = _serviceProvider.GetRequiredService<PayrollRunListViewModel>();
+        CurrentPageTitle = "Payroll";
+        SetActiveNav(payroll: true);
+    }
+
+    private void SetActiveNav(bool dashboard = false, bool employees = false, bool contracts = false, bool payroll = false)
     {
         IsDashboardActive = dashboard;
         IsEmployeesActive = employees;
         IsContractsActive = contracts;
+        IsPayrollActive = payroll;
     }
 
     [RelayCommand]

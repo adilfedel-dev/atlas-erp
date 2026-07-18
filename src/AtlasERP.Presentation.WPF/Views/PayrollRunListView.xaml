@@ -1,0 +1,48 @@
+<UserControl x:Class="AtlasERP.Presentation.WPF.Views.PayrollRunListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Payroll" Style="{StaticResource Text.Heading1}" />
+                <TextBlock Text="Generate monthly payroll runs and print payslips" Style="{StaticResource Text.Subtitle}" Margin="0,2,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Content="Refresh" Command="{Binding LoadCommand}" Margin="0,0,8,0" />
+                <Button Content="View" Command="{Binding ViewRunCommand}" Margin="0,0,8,0" />
+                <Button Content="Delete" Command="{Binding DeleteRunCommand}" Margin="0,0,8,0" />
+                <Button Content="+ Generate run" Style="{StaticResource Button.Primary}" Command="{Binding GenerateRunCommand}" />
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Grid.Row="1"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource Brush.Error}"
+                   Margin="0,0,0,8"
+                   Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+
+        <Border Grid.Row="2" Style="{StaticResource Panel.Card}" Padding="0">
+            <DataGrid ItemsSource="{Binding Runs}"
+                      SelectedItem="{Binding SelectedRun}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      SelectionMode="Single"
+                      GridLinesVisibility="Horizontal"
+                      BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Period" Binding="{Binding PeriodLabel}" Width="160" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100" />
+                    <DataGridTextColumn Header="Employees" Binding="{Binding EmployeeCount}" Width="100" />
+                    <DataGridTextColumn Header="Total net pay" Binding="{Binding TotalNet, StringFormat=C}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

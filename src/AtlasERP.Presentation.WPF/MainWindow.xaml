@@ -19,6 +19,9 @@
         <DataTemplate DataType="{x:Type vm:ContractListViewModel}">
             <views:ContractListView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PayrollRunListViewModel}">
+            <views:PayrollRunListView />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -67,7 +70,11 @@
                                   Command="{Binding NavigateToContractsCommand}"
                                   IsChecked="{Binding IsContractsActive, Mode=OneWay}"
                                   Content="Contracts" />
-                    <!-- Future modules (Payroll, Invoices, ...) attach nav items here -->
+                    <ToggleButton Style="{StaticResource Button.NavItem}"
+                                  Command="{Binding NavigateToPayrollCommand}"
+                                  IsChecked="{Binding IsPayrollActive, Mode=OneWay}"
+                                  Content="Payroll" />
+                    <!-- Future modules (Invoices, ...) attach nav items here -->
                 </StackPanel>
             </DockPanel>
         </Border>

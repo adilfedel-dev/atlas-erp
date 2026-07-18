@@ -90,6 +90,7 @@ public partial class App : Application
         services.AddSingleton<MasterDbSeeder>();
         services.AddSingleton<IEmployeeService, EmployeeService>();
         services.AddSingleton<IContractService, ContractService>();
+        services.AddSingleton<IPayrollService, PayrollService>();
 
         services.AddTransient<LoginViewModel>();
         services.AddTransient<LoginView>();
@@ -103,6 +104,11 @@ public partial class App : Application
         services.AddTransient<ContractListViewModel>();
         services.AddTransient<ContractEditViewModel>();
         services.AddTransient<ContractEditView>();
+        services.AddTransient<PayrollRunListViewModel>();
+        services.AddTransient<PayrollRunDetailViewModel>();
+        services.AddTransient<PayrollRunDetailView>();
+        services.AddTransient<GenerateRunViewModel>();
+        services.AddTransient<GenerateRunView>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
     }
