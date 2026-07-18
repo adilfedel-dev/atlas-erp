@@ -4,10 +4,8 @@ This is the platform skeleton: Master DB (companies/users/roles), per-company DB
 dynamic connection switching, WPF shell (login → company selector → main window),
 Light/Dark theming, and the first real module (Employees — list, add, edit, delete).
 
-WPF only builds and runs on **Windows**. These steps assume you've gotten the `src/`
-folder and `AtlasERP.sln` onto a Windows machine (however that happens — we haven't
-wired up a GitHub remote yet, so for now that's a manual copy; ask if you want to set
-one up).
+WPF only builds and runs on **Windows**. Clone this repo on a Windows machine:
+`git clone https://github.com/adilfedel-dev/atlas-erp.git`
 
 ## Prerequisites
 
@@ -37,7 +35,7 @@ dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --s
 
 **3. Generate the per-company DB migration**
 ```
-dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.Company.CompanyDbContext --output-dir Company/Migrations
+dotnet ef migrations add InitialCreate --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir Company/Migrations
 ```
 
 **4. Run the app**
@@ -64,7 +62,7 @@ strings at anything real without changing this first.
 - `AtlasERP.Core.Domain` — entities only, no dependencies
 - `AtlasERP.Core.Application` — service interfaces (`Abstractions/`), the one
   dependency-free implementation (`CompanyContextService`)
-- `AtlasERP.Infrastructure` — EF Core DbContexts (`Master/`, `Company/`), service
+- `AtlasERP.Infrastructure` — EF Core DbContexts (`Master/`, `PerCompany/`), service
   implementations, migrations (once generated)
 - `AtlasERP.Presentation.WPF` — views, viewmodels (CommunityToolkit.Mvvm), DI/host
   wiring in `App.xaml.cs`, theming in `Themes/`
@@ -77,6 +75,6 @@ Same pattern as Employees: a domain entity under `Core.Domain`, an
 ViewModel/View pair in `Presentation.WPF`, then a `DataTemplate` + nav button in
 `MainWindow.xaml`. After adding entities, generate a new migration:
 ```
-dotnet ef migrations add <Name> --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.Company.CompanyDbContext --output-dir Company/Migrations
+dotnet ef migrations add <Name> --project src/AtlasERP.Infrastructure --startup-project src/AtlasERP.Presentation.WPF --context AtlasERP.Infrastructure.PerCompany.CompanyDbContext --output-dir Company/Migrations
 ```
 It gets applied to all four company databases automatically on next launch.
